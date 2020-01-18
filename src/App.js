@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import FormLogIn from './components/FormLogIn';
+import FormLogInGuest from './components/FormLogInGuest';
+import FormCreateUser from './components/FormCreateUser';
+import FormCreateAuthor from './components/FormCreateAuthor';
+import FormCreateMeetingPoint from './components/FormCreateMeetingPoint';
+import FormCreateTravel from './components/FormCreateTravel';
 
+class App extends React.Component {
+
+    state = {
+        token: null
+    }
+
+    render() {
+        return (
+            <main style={{ maxWidth: '1200px', margin: 'auto auto' }}>
+                {this.state.token === null ?
+                    <FormLogInGuest setToken={token => this.setState({ token: token })} />
+                    :
+                    null
+                }
+                {this.state.token === null ?
+                    null
+                    :
+                    <>
+                        <h1 className="title">Zalogowano</h1>
+                        <FormCreateUser token={this.state.token} />
+                        <FormCreateAuthor token={this.state.token} />
+                        <FormCreateMeetingPoint token={this.state.token} />
+                        <FormCreateTravel token={this.state.token} />
+                        <FormLogIn setToken={token => this.setState({ token: token })} />
+                    </>
+                }
+            </main>
+        );
+    }
+};
 export default App;

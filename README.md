@@ -1,6 +1,5 @@
 ### TODO 20-01-2020
-Skończyć FormLogIn (walidacja)
-Skończyć FormLogInGuest (walidacja)
+Refaktor FormCreateTravel
 
 ### Później...
 Lista prelekcji

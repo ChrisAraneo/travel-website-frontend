@@ -6,6 +6,7 @@ import { faFlag, faPlane, faCalendar, faHourglass, faHome, faComment, faUser, fa
 import config from '../config/config';
 
 import Form from './Form';
+import InputText from './InputText';
 
 class FormCreateTravel extends React.Component {
 
@@ -435,7 +436,16 @@ class FormCreateTravel extends React.Component {
                 message={this.state.message}
                 button="Dodaj stronę prelekcji"
                 action={(event) => this.handleCreateTravel(this.state.title, this.state.location, this.state.date, this.state.hour, this.state.id_meetingpoint, this.state.latitude, this.state.longitude, this.state.description, this.state.selectedAuthors, this.state.photos, this.props.token)}>
-                <div className="field">
+
+                <InputText
+                    label="Tytuł prelekcji"
+                    icon={faFlag}
+                    validation={val => (val.length > 5)}
+                    message="Tytuł prelekcji jest za krótki."
+                    complete={title => this.setState({ title })}
+                />
+
+                {/* <div className="field">
                     <label className="label">Tytuł prelekcji</label>
                     <div className="control has-icons-left">
                         <input
@@ -454,7 +464,8 @@ class FormCreateTravel extends React.Component {
                             :
                             null
                     }
-                </div>
+                </div> */}
+
                 <div className="field">
                     <label className="label">Kraj podróży</label>
                     {

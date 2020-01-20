@@ -1,10 +1,12 @@
 import React from 'react';
 import 'bulma/css/bulma.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 
 import config from '../config/config';
 import Form from './Form';
+
+import InputText from './InputText';
+import InputPassword from './InputPassword';
 
 class FormLogIn extends React.Component {
 
@@ -18,36 +20,44 @@ class FormLogIn extends React.Component {
         password: '',
 
         success: false,
-        message: ''
+        message: '',
+
+        token: null
     }
 
     handleLogIn(username, password) {
-        const formData = new FormData();
-        formData.append('username', username);
-        formData.append('password', password);
+        if (username && password) {
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
 
-        fetch(`${config.url}/api/post/login.php`, {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(result => {
-                const token = result.data;
-                this.setState({
-                    success: result.success,
-                    message: result.message,
-                    data: token,
-                    username: '',
-                    password: ''
-                });
-                if (token !== null && token !== undefined) {
-                    this.props.setToken(token);
-                }
+            fetch(`${config.url}/api/post/login.php`, {
+                method: 'POST',
+                body: formData
             })
-            .catch(error => this.setState({
+                .then(response => response.json())
+                .then(result => {
+                    this.setState({
+                        success: result.success,
+                        message: result.message,
+                        token: result.data
+                    }, () => {
+                        if (this.state.token !== null && this.state.token !== undefined) {
+                            this.props.setToken(this.state.token);
+                        }
+                    });
+
+                })
+                .catch(error => this.setState({
+                    success: false,
+                    message: String(error)
+                }));
+        } else {
+            this.setState({
                 success: false,
-                message: String(error)
-            }));
+                message: "Uzupełnij nazwę użytkownika i hasło."
+            });
+        }
     }
 
     render() {
@@ -57,33 +67,21 @@ class FormLogIn extends React.Component {
                 success={this.state.success}
                 message={this.state.message}
                 button="Zaloguj się"
-                action={(event) => this.handleLogIn(this.state.username, this.state.password)}>
-                <div className="field">
-                    <label className="label">Nazwa użytkownika</label>
-                    <div className="control has-icons-left">
-                        <input
-                            className="input"
-                            value={this.state.username}
-                            type="text"
-                            onChange={(event) => this.setState({ username: event.target.value })} />
-                        <span className="icon is-small is-left">
-                            <FontAwesomeIcon icon={faUser} />
-                        </span>
-                    </div>
-                </div>
-                <div className="field">
-                    <label className="label">Hasło</label>
-                    <div className="control has-icons-left">
-                        <input
-                            className="input"
-                            value={this.state.password}
-                            type="password"
-                            onChange={(event) => this.setState({ password: event.target.value })} />
-                        <span className="icon is-small is-left">
-                            <FontAwesomeIcon icon={faLock} />
-                        </span>
-                    </div>
-                </div>
+                action={() => this.handleLogIn(this.state.username, this.state.password)}>
+                <InputText
+                    label="Nazwa użytkownika"
+                    icon={faUser}
+                    validation={val => (val.length > 3)}
+                    message="Nazwa użytkownika jest za krótka."
+                    complete={username => this.setState({ username })}
+                />
+                <InputPassword
+                    label="Hasło"
+                    icon={faLock}
+                    validation={val => (val.length > 5)}
+                    message="Hasło jest za krótkie."
+                    complete={password => this.setState({ password })}
+                />
             </Form>
         );
     }

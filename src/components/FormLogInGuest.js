@@ -5,6 +5,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 import config from '../config/config';
 import Form from './Form';
+import InputPassword from './InputPassword';
 
 class FormLogIn extends React.Component {
 
@@ -14,41 +15,48 @@ class FormLogIn extends React.Component {
     }
 
     state = {
-        username: '',
         password: '',
 
         success: false,
         message: '',
-        data: null
+
+        token: null
     }
 
     handleLogIn(username, password) {
-        const formData = new FormData();
-        formData.append('username', username);
-        formData.append('password', password);
+        if (username && password) {
+            const formData = new FormData();
+            formData.append('username', username);
+            formData.append('password', password);
 
-        fetch(`${config.url}/api/post/login.php`, {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(result => {
-                const token = result.data;
-                this.setState({
-                    success: result.success,
-                    message: result.message,
-                    data: token,
-                    username: '',
-                    password: ''
-                });
-                if (token !== null && token !== undefined) {
-                    this.props.setToken(token);
-                }
+            fetch(`${config.url}/api/post/login.php`, {
+                method: 'POST',
+                body: formData
             })
-            .catch(error => this.setState({
+                .then(response => response.json())
+                .then(result => {
+                    this.setState({
+                        success: result.success,
+                        message: result.message,
+                        token: result.data,
+                        password: ''
+                    }, () => {
+                        if (this.state.token !== null && this.state.token !== undefined) {
+                            this.props.setToken(this.state.token);
+                        }
+                    });
+
+                })
+                .catch(error => this.setState({
+                    success: false,
+                    message: String(error)
+                }));
+        } else {
+            this.setState({
                 success: false,
-                message: String(error)
-            }));
+                message: "Uzupełnij hasło."
+            });
+        }
     }
 
     render() {
@@ -57,21 +65,15 @@ class FormLogIn extends React.Component {
                 title="Podaj hasło"
                 success={this.state.success}
                 message={this.state.message}
-                action={(event) => this.handleLogIn('user', this.state.password)}
+                action={() => this.handleLogIn('user', this.state.password)}
                 button="Wejdź na stronę">
-                <div className="field">
-                    <label className="label">Hasło</label>
-                    <div className="control has-icons-left">
-                        <input
-                            className="input"
-                            value={this.state.password}
-                            type="password"
-                            onChange={(event) => this.setState({ password: event.target.value })} />
-                        <span className="icon is-small is-left">
-                            <FontAwesomeIcon icon={faLock} />
-                        </span>
-                    </div>
-                </div>
+                <InputPassword
+                    label="Hasło"
+                    icon={faLock}
+                    validation={val => (val.length > 5)}
+                    message="Hasło jest za krótkie."
+                    complete={password => this.setState({ password })}
+                />
             </Form>
         );
     }

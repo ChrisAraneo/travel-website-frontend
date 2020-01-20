@@ -30,8 +30,6 @@ class FormCreateAuthor extends React.Component {
         invalidLastName: null
     }
 
-
-
     onChangeFirstName(event) {
         const string = event.target.value;
         const firstname = string.charAt(0).toUpperCase() + string.slice(1);
@@ -90,33 +88,24 @@ class FormCreateAuthor extends React.Component {
             return;
         }
 
-        if (typeof firstname === "string" && typeof lastname === "string") {
-            if (firstname.length >= 2 && lastname.length >= 2) {
-                const formData = new FormData();
-                formData.append('firstname', firstname);
-                formData.append('lastname', lastname);
-                formData.append('token', token);
+        const formData = new FormData();
+        formData.append('firstname', firstname);
+        formData.append('lastname', lastname);
+        formData.append('token', token);
 
-                fetch(`${config.url}/api/post/author.php`, {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => response.json())
-                    .then(result => this.setState({
-                        success: result.success,
-                        message: result.message
-                    }, () => this.resetForm()))
-                    .catch(error => this.setState({
-                        success: false,
-                        message: String(error)
-                    }));
-            } else {
-                this.setState({
-                    success: false,
-                    message: "Imię i nazwisko są za krótkie"
-                });
-            }
-        }
+        fetch(`${config.url}/api/post/author.php`, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(result => this.setState({
+                success: result.success,
+                message: result.message
+            }, () => this.resetForm()))
+            .catch(error => this.setState({
+                success: false,
+                message: String(error)
+            }));
     }
 
     render() {

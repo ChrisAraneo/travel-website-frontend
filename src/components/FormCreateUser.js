@@ -116,7 +116,7 @@ class FormCreateUser extends React.Component {
                 success={this.state.success}
                 message={this.state.message}
                 button="Dodaj"
-                action={(event) => this.handleCreateUser(this.state.username, this.state.password, this.props.token)}>
+                action={() => this.handleCreateUser(this.state.username, this.state.password, this.props.token)}>
                 <div className="field">
                     <label className="label">Nazwa użytkownika</label>
                     <div className="control has-icons-left">

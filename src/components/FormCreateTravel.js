@@ -150,6 +150,13 @@ class FormCreateTravel extends React.Component {
             })
             return false;
         }
+        if (id_meetingpoint === null) {
+            this.setState({
+                success: false,
+                message: "Wybierz miejsce spotkania."
+            })
+            return false;
+        }
         if (date === null) {
             this.setState({
                 success: false,
@@ -161,13 +168,6 @@ class FormCreateTravel extends React.Component {
             this.setState({
                 success: false,
                 message: "Wybierz godzinę spotkania."
-            })
-            return false;
-        }
-        if (id_meetingpoint === null) {
-            this.setState({
-                success: false,
-                message: "Wybierz miejsce spotkania."
             })
             return false;
         }

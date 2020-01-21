@@ -1,7 +1,6 @@
 import React from 'react';
 import 'bulma/css/bulma.min.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 /*
 props.label
@@ -9,6 +8,7 @@ props.icon
 props.validation
 props.message
 props.complete
+props.forceValidation
 */
 class InputText extends React.Component {
 
@@ -33,10 +33,10 @@ class InputText extends React.Component {
         }
     }
 
-    validate() {
-        if (this.props.validation(this.state.value)) {
+    validate(value) {
+        if (this.props.validation(value)) {
             this.setState({ invalid: false });
-            this.props.complete(this.state.value);
+            this.props.complete(value);
             return true;
         } else {
             this.setState({ invalid: this.props.message });

@@ -1,6 +1,5 @@
 import React from 'react';
 import 'bulma/css/bulma.min.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 import config from '../config/config';

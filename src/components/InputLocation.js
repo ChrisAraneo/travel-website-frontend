@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bulma/css/bulma.min.css';
+import '../styles/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -89,7 +89,7 @@ class InputLocation extends React.Component {
                                 </div>
                                 <div className="control">
                                     <button
-                                        className="button is-info"
+                                        className="button is-primary"
                                         onClick={this.fetchLocations}>
                                         <FontAwesomeIcon icon={faSearch} />
                                     </button>

@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bulma/css/bulma.min.css';
+import '../styles/index.css';
 
 const Button = (props) => (
     <button className="button is-primary">{props.children}</button>

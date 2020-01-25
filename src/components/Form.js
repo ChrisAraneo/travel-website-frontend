@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bulma/css/bulma.min.css';
+import '../styles/index.css';
 
 import Message from './Message';
 
@@ -33,7 +33,7 @@ class Form extends React.Component {
 
     render() {
         return (
-            <form className="box" style={{ maxWidth: '600px', margin: 'auto auto' }}>
+            <form className="box" style={{ maxWidth: '100%', marginLeft: 'auto', margtinRight: 'auto' }}>
                 <h1 className="title">{this.props.title}</h1>
                 <Message
                     header={this.state.success ? 'OK' : 'Błąd'}

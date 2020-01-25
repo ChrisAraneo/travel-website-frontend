@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bulma/css/bulma.min.css';
+import '../styles/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFlag, faHome, faComment, faUser, faGlobe } from '@fortawesome/free-solid-svg-icons'
 

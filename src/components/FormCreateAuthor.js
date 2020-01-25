@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bulma/css/bulma.min.css';
+import '../styles/index.css';
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 import config from '../config/config';

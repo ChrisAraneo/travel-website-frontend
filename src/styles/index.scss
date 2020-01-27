@@ -4,15 +4,70 @@
     padding: 0;
     margin: 0;
 }
+/* THEME */
 
-$primary: hsl(32, 56%, 28%);
-$dark: hsl(33, 58%, 12%);
+/* GENERAL */
+$scheme-main: hsl(45, 57%, 83%);
+$primary: hsl(32, 56%, 28%);;
+$info: hsl(204, 71%, 53%);
+$success: hsl(141, 53%, 53%);
+$warning: hsl(48, 100%, 67%);
+$danger: hsl(348, 86%, 61%);
+$light: hsl(40, 50%, 60%);
+$dark: #30200d;
+$background: $scheme-main;
 
-$box-padding: 2.5rem;
-$block-spacing: 2.5rem;
+/* BORDERS */
+$border: darken($scheme-main, 20%);
+$border-hover: darken($border, 12%);
+$border-light: lighten($border, 10%);
+$border-light-hover: darken($border-light, 12%);
 
-$box-shadow: 0 0.5em 2em -0.125em darken($dark, 5%), 0 0px 0 3px lighten($primary, 12%);
+/* TEXT */
+$text: hsl(0, 0%, 29%);
+$text-light: lighten($text, 0%); 
+$text-strong: hsl(0, 0%, 21%);
+$code: hsl(348, 86%, 61%);
+$code-background: hsl(0, 0%, 96%);
+$pre: hsl(0, 0%, 29%);
+$pre-background: hsl(0, 0%, 96%);
 
+/* LINKS */
+$link: $primary;
+$link-visited: hsl(271, 100%, 71%);
+$link-hover: hsl(0, 0%, 21%);
+$link-hover-border: hsl(0, 0%, 71%);
+$link-focus: hsl(0, 0%, 21%);
+$link-focus-border: lighten($primary, 15%);
+$link-active: hsl(0, 0%, 21%);
+$link-active-border: hsl(0, 0%, 29%);
+
+/* INPUT COLORS */
+$input-border-color: darken($border, 20%);
+$input-hover-border-color: darken($input-border-color, 15%);
+$input-focus-border-color: $input-border-color; 
+$input-arrow: $input-focus-border-color;
+$input-icon-color: lighten($input-border-color, 7%);
+$input-icon-active-color: $input-hover-border-color;
+
+/* BUTTONS, DEFAULT */
+// $button-border-color: $primary;
+// $button-hover-border-color: darken($button-border-color, 15%);
+// $button-background-color: $scheme-main;
+// $button-text-hover-background-color: darken($button-background-color, 4%);
+
+/* FILE BUTTON */
+$file-border-color: $primary;
+$file-cta-background-color: $primary; 
+$file-cta-color: #fff;
+$file-cta-hover-color: #fff;
+$file-cta-active-color: $file-cta-hover-color;
+$file-name-border-color: #fff;
+
+$box-padding: 2rem;
+$block-spacing: 2rem;
+
+$box-shadow: 0 0.5em 2em -0em darken($dark, 30%), 0 0px 0 3px lighten($primary, 5%);
 
 @import '../../node_modules/bulma/bulma.sass';
 
@@ -20,6 +75,14 @@ body {
     box-sizing: border-box;
     max-width: 100%;
     height: 100vh;
+}
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
 }
 #root {
     box-sizing: border-box;
@@ -30,10 +93,9 @@ body {
     width: 100%;
     min-height: 100vh;
     max-height: 100vh;
-    padding: $box-padding;
-    z-index: 1000;
+    z-index: 0;
 }
-#root::before {
+#root::after {
     content: "";
     position: fixed;
     top: 0;
@@ -43,14 +105,23 @@ body {
     background-color: rgba($dark, 0.75);
     z-index: -1;
 }
-
+#page-wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    min-height: 100vh;
+    z-index: 20000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $box-padding;
+}
 #page-container {
     box-sizing: border-box;
-    margin: auto auto;
     background: radial-gradient(circle at top center, $primary,darken($primary, 5%),lighten($dark,6%),$dark,lighten($dark,10%));
     background-attachment: fixed;
     background-size: 100% 100%;
-    z-index: 1000;
     max-width: 1000px;
     padding: $box-padding * 2;
     border-color: black;
@@ -61,6 +132,17 @@ form:not(:last-of-type) {
     margin-bottom: $box-padding;
 }
 
+.delete {
+    background-color: darken($scheme-main, 25%);
+}
+.delete:hover {
+    background-color: darken($scheme-main, 40%);
+}
+
 .page {
     margin: auto auto;
+}
+
+.title {
+    padding-bottom: 1rem;
 }

@@ -2,10 +2,10 @@ import React from 'react';
 import '../styles/index.css';
 import { faHome, faMapMarker } from '@fortawesome/free-solid-svg-icons'
 
-import config from '../config/config';
-
 import Form from './Form';
 import InputText from './InputText';
+
+import config from '../config/config';
 
 class FormCreateMeetingPoint extends React.Component {
 

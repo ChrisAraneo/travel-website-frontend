@@ -107,7 +107,7 @@ class InputList extends React.Component {
                         {
                             this.props.data.length > 0 ?
                                 <button
-                                    className="button"
+                                    className="button is-primary"
                                     onClick={(event) => {
                                         event.preventDefault();
                                         const index = this.state.selectedIndex;

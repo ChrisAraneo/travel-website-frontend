@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/index.css';
 
+import Title from './Title';
 import Message from './Message';
 
 /*
@@ -34,7 +35,7 @@ class Form extends React.Component {
     render() {
         return (
             <form className="box" style={{ maxWidth: '100%', marginLeft: 'auto', margtinRight: 'auto' }}>
-                <h1 className="title">{this.props.title}</h1>
+                <Title>{this.props.title}</Title>
                 <Message
                     header={this.state.success ? 'OK' : 'Błąd'}
                     type={this.state.success ? 'success' : 'danger'}

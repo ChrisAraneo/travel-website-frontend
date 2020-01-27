@@ -3,8 +3,6 @@ import '../styles/index.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFlag, faHome, faComment, faUser, faGlobe } from '@fortawesome/free-solid-svg-icons'
 
-import config from '../config/config';
-
 import Form from './Form';
 import InputText from './InputText';
 import InputLocation from './InputLocation';
@@ -13,6 +11,8 @@ import InputDate from './InputDate';
 import InputTime from './InputTime';
 import InputList from './InputList';
 import InputPhotos from './InputPhotos';
+
+import config from '../config/config';
 
 class FormCreateTravel extends React.Component {
 

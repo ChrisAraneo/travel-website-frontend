@@ -8,6 +8,7 @@ import LogInGuestPage from './pages/LogInGuestPage';
 import AdminPanelPage from './pages/AdminPanelPage';
 import LogInPage from './pages/LogInPage';
 import GlobePage from './pages/GlobePage';
+import TravelListPage from './pages/TravelListPage';
 
 class App extends React.Component {
 
@@ -33,12 +34,12 @@ class App extends React.Component {
 
     fetchAll() {
         this.fetchMeetingPoints(
-            () => this.fetchAuthors(() => null)
+            () => this.fetchAuthors(() => console.log(this.state.authors, this.state.meetingpoints))
         );
     }
 
     fetchMeetingPoints(successCallback) {
-        fetch(`${config.url}/api/get/meetingpoints.php?token=${this.props.token}`, {
+        fetch(`${config.url}/api/get/meetingpoints.php?token=${this.state.token}`, {
             method: 'GET'
         })
             .then(response => response.json())
@@ -54,7 +55,7 @@ class App extends React.Component {
     }
 
     fetchAuthors(successCallback) {
-        fetch(`${config.url}/api/get/authors.php?token=${this.props.token}`, {
+        fetch(`${config.url}/api/get/authors.php?token=${this.state.token}`, {
             method: 'GET'
         })
             .then(response => response.json())
@@ -73,11 +74,11 @@ class App extends React.Component {
 
         const loginCallback = (username) => {
             if (username === 'admin') {
-                this.setState({ page: 2 });
+                this.setState({ page: 2 },
+                    () => this.fetchAll());
             } else if (username) {
                 this.setState({ page: 3 });
             }
-            this.fetchAll();
         };
 
         switch (this.state.page) {
@@ -86,14 +87,22 @@ class App extends React.Component {
                     <LogInGuestPage
                         setToken={token => this.setState({ token })}
                         setUsername={username => this.setState({ username },
-                            () => loginCallback(this.state.username))} />
+                            () => loginCallback(this.state.username))}
+                        setPageToLogin={() => this.setState({ page: 1 })}
+                        setPageToGlobe={() => this.setState({ page: 3 })}
+                        setPageToTravelList={() => this.setState({ page: 4 })}
+                    />
                 );
             case 1:
                 return (
                     <LogInPage
                         setToken={token => this.setState({ token })}
                         setUsername={username => this.setState({ username },
-                            () => loginCallback(this.state.username))} />
+                            () => loginCallback(this.state.username))}
+                        setPageToLogin={() => this.setState({ page: 1 })}
+                        setPageToGlobe={() => this.setState({ page: 3 })}
+                        setPageToTravelList={() => this.setState({ page: 4 })}
+                    />
                 );
             case 2:
                 return (
@@ -102,6 +111,9 @@ class App extends React.Component {
                         username={this.state.username}
                         authors={this.state.authors}
                         meetingpoints={this.state.meetingpoints}
+                        setPageToLogin={() => this.setState({ page: 1 })}
+                        setPageToGlobe={() => this.setState({ page: 3 })}
+                        setPageToTravelList={() => this.setState({ page: 4 })}
                     />
                 );
             case 3:
@@ -109,15 +121,20 @@ class App extends React.Component {
                     <GlobePage
                         token={this.state.token}
                         username={this.state.username}
+                        setPageToLogin={() => this.setState({ page: 1 })}
+                        setPageToGlobe={() => this.setState({ page: 3 })}
+                        setPageToTravelList={() => this.setState({ page: 4 })}
                     />
                 );
             case 4:
                 return (
-                    null
-                    // <TravelListPage
-                    //     token={token}
-                    //     username={username}
-                    // />
+                    <TravelListPage
+                        token={this.state.token}
+                        username={this.state.username}
+                        setPageToLogin={() => this.setState({ page: 1 })}
+                        setPageToGlobe={() => this.setState({ page: 3 })}
+                        setPageToTravelList={() => this.setState({ page: 4 })}
+                    />
                 );
             case 5:
                 return (

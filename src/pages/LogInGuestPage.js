@@ -4,7 +4,7 @@ import Page from '../components/Page';
 import '../styles/index.css';
 
 const LogInGuestPage = (props) => (
-    <Page>
+    <Page setPageToLogin={props.setPageToLogin}>
         <FormLogInGuest
             setToken={props.setToken}
             setUsername={props.setUsername} />

@@ -2,6 +2,7 @@ import React from 'react';
 import Background from './Background';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
+import Navigation from './Navigation';
 import '../styles/index.css';
 
 const Page = (props) => (
@@ -10,8 +11,9 @@ const Page = (props) => (
             <div id="page-container" className="box">
                 <div className="page">
                     <SiteHeader />
+                    <Navigation setPageToGlobe={props.setPageToGlobe} setPageToTravelList={props.setPageToTravelList} />
                     {props.children}
-                    <SiteFooter />
+                    < SiteFooter setPageToLogin={props.setPageToLogin} />
                 </div>
             </div>
         </main>

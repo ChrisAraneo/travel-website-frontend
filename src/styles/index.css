@@ -6,13 +6,16 @@
 }
 
 /* THEME */
+/* SPACING */
 /* GENERAL */
 /* BORDERS */
 /* TEXT */
 /* LINKS */
 /* INPUT COLORS */
-/* BUTTONS, DEFAULT */
+/* BUTTONS */
 /* FILE BUTTON */
+/* SHADOWS */
+/* IMPORTING BULMA */
 /*! bulma.io v0.8.0 | MIT License | github.com/jgthms/bulma */
 @-webkit-keyframes spinAround {
   from {
@@ -11866,6 +11869,7 @@ label.panel-block:hover {
   padding: 3rem 1.5rem 6rem;
 }
 
+/* CUSTOM CSS RULES */
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -11957,5 +11961,47 @@ form:not(:last-of-type) {
 
 .title {
   padding-bottom: 1rem;
+}
+
+#navigation {
+  margin-bottom: 2rem;
+}
+
+#navigation .button {
+  -webkit-box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
+          box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
+  border-width: 0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#7b5223), to(#63421c));
+  background-image: linear-gradient(#7b5223, #63421c);
+}
+
+#navigation .button:hover {
+  -webkit-box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #97652b;
+          box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #97652b;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#875a26), to(#6f4a1f));
+  background-image: linear-gradient(#875a26, #6f4a1f);
+}
+
+#navigation .button.is-primary:active, #navigation .button.is-primary.is-active {
+  background-color: #363636;
+  color: #e6c9a7;
+  -webkit-box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
+          box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#5b3d1a), to(#7b5223));
+  background-image: linear-gradient(#5b3d1a, #7b5223);
+  cursor: not-allowed;
+}
+
+/* MOBILE */
+@media only screen and (max-width: 768px) {
+  #page-wrapper {
+    padding: 0;
+  }
+  .box, #page-container {
+    padding: 1rem;
+  }
+  .box:not(:last-child), .content:not(:last-child), .notification:not(:last-child), .progress:not(:last-child), .table:not(:last-child), .table-container:not(:last-child), .title:not(:last-child), .subtitle:not(:last-child), .block:not(:last-child), .highlight:not(:last-child), .breadcrumb:not(:last-child), .level:not(:last-child), .list:not(:last-child), .message:not(:last-child), .pagination:not(:last-child), .tabs:not(:last-child), #navigation {
+    margin-bottom: 1rem;
+  }
 }
 /*# sourceMappingURL=index.css.map */

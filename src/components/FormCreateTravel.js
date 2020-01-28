@@ -23,9 +23,6 @@ class FormCreateTravel extends React.Component {
         this.handleCreateAuthorGroup = this.handleCreateAuthorGroup.bind(this);
         this.handleCreatePhotos = this.handleCreatePhotos.bind(this);
 
-        this.fetchMeetingPoints = this.fetchMeetingPoints.bind(this);
-        this.fetchAuthors = this.fetchAuthors.bind(this);
-
         this.validate = this.validate.bind(this);
         this.resetForm = this.resetForm.bind(this);
     }
@@ -42,51 +39,13 @@ class FormCreateTravel extends React.Component {
         photos: null,
         description: '',
 
+        success: false,
+        message: '',
+
+        // FROM PROPS (FETCHED IN APP)
         meetingpoints: [],
         authors: [],
-
-        success: false,
-        message: ''
     }
-
-    componentDidMount() {
-        this.fetchMeetingPoints(
-            () => this.fetchAuthors(() => null)
-        );
-    }
-
-    fetchMeetingPoints(successCallback) {
-        fetch(`${config.url}/api/get/meetingpoints.php?token=${this.props.token}`, {
-            method: 'GET'
-        })
-            .then(response => response.json())
-            .then(result => {
-                this.setState({
-                    meetingpoints: result.data
-                }, () => successCallback());
-            })
-            .catch(error => this.setState({
-                success: false,
-                message: String(error)
-            }));
-    }
-
-    fetchAuthors(successCallback) {
-        fetch(`${config.url}/api/get/authors.php?token=${this.props.token}`, {
-            method: 'GET'
-        })
-            .then(response => response.json())
-            .then(result => {
-                this.setState({
-                    authors: result.data
-                }, () => successCallback());
-            })
-            .catch(error => this.setState({
-                success: false,
-                message: String(error)
-            }));
-    }
-
 
     handleCreateTravel(title, location, date, hour, id_meetingpoint, latitude, longitude, description, authors, photos, token) {
 
@@ -243,6 +202,13 @@ class FormCreateTravel extends React.Component {
     }
 
     render() {
+        if (this.props.authors !== this.state.authors || this.props.meetingpoints !== this.state.meetingpoints) {
+            this.setState({
+                authors: this.props.authors,
+                meetingpoints: this.props.meetingpoints
+            });
+        }
+
         return (
             <Form
                 title="Dodaj stronę prelekcji"

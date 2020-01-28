@@ -12,6 +12,7 @@ class GlobePage extends React.Component {
     render() {
         return (
             <Page>
+                <h1>Zalogowano jako {this.props.username}</h1>
             </Page>
         );
     }

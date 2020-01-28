@@ -5,7 +5,10 @@ import '../styles/index.css';
 
 const LogInPage = (props) => (
     <Page>
-        <FormLogIn setToken={token => props.setToken(token)} />
+        <FormLogIn
+            setToken={props.setToken}
+            setUsername={props.setUsername} />
+        {props.children}
     </Page>
 );
 

@@ -5,6 +5,8 @@ import '../styles/index.css';
 
 const LogInPage = (props) => (
     <Page
+        success={props.success}
+        message={props.message}
         setPageToGlobe={props.setPageToGlobe}
         setPageToTravelList={props.setPageToTravelList}>
         <FormLogIn

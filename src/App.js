@@ -17,6 +17,7 @@ class App extends React.Component {
         this.renderPage = this.renderPage.bind(this);
         this.fetchMeetingPoints = this.fetchMeetingPoints.bind(this);
         this.fetchAuthors = this.fetchAuthors.bind(this);
+        this.fetchAuthorGroups = this.fetchAuthorGroups.bind(this);
         this.fetchAll = this.fetchAll.bind(this);
     }
 
@@ -27,14 +28,16 @@ class App extends React.Component {
 
         meetingpoints: [],
         authors: [],
+        authorgroups: [],
 
-        success: false,
+        success: true,
         message: ''
     }
 
     fetchAll() {
         this.fetchMeetingPoints(
-            () => this.fetchAuthors(() => console.log(this.state.authors, this.state.meetingpoints))
+            () => this.fetchAuthors(
+                () => this.fetchAuthorGroups(() => console.log(this.state)))
         );
     }
 
@@ -70,6 +73,38 @@ class App extends React.Component {
             }));
     }
 
+    fetchPhoto(id_photo, successCallback) {
+        fetch(`${config.url}/api/get/authors.php?token=${this.state.token}?id_photo=${id_photo}`, {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(result => {
+                this.setState({
+                    authors: result.data
+                }, () => successCallback());
+            })
+            .catch(error => this.setState({
+                success: false,
+                message: String(error)
+            }));
+    }
+
+    fetchAuthorGroups(successCallback) {
+        fetch(`${config.url}/api/get/authorgroups.php?token=${this.state.token}`, {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(result => {
+                this.setState({
+                    authorgroups: result.data
+                }, () => successCallback());
+            })
+            .catch(error => this.setState({
+                success: false,
+                message: String(error)
+            }));
+    }
+
     renderPage() {
 
         const loginCallback = (username) => {
@@ -77,7 +112,8 @@ class App extends React.Component {
                 this.setState({ page: 2 },
                     () => this.fetchAll());
             } else if (username) {
-                this.setState({ page: 3 });
+                this.setState({ page: 3 },
+                    () => this.fetchAll());
             }
         };
 
@@ -85,12 +121,15 @@ class App extends React.Component {
             case 0:
                 return (
                     <LogInGuestPage
-                        setToken={token => this.setState({ token })}
+                        setToken={token => this.setState({ token },
+                            () => loginCallback(this.state.username))}
                         setUsername={username => this.setState({ username },
                             () => loginCallback(this.state.username))}
                         setPageToLogin={() => this.setState({ page: 1 })}
                         setPageToGlobe={() => this.setState({ page: 3 })}
                         setPageToTravelList={() => this.setState({ page: 4 })}
+                        success={this.state.success}
+                        message={this.state.message}
                     />
                 );
             case 1:
@@ -102,6 +141,8 @@ class App extends React.Component {
                         setPageToLogin={() => this.setState({ page: 1 })}
                         setPageToGlobe={() => this.setState({ page: 3 })}
                         setPageToTravelList={() => this.setState({ page: 4 })}
+                        success={this.state.success}
+                        message={this.state.message}
                     />
                 );
             case 2:
@@ -114,6 +155,8 @@ class App extends React.Component {
                         setPageToLogin={() => this.setState({ page: 1 })}
                         setPageToGlobe={() => this.setState({ page: 3 })}
                         setPageToTravelList={() => this.setState({ page: 4 })}
+                        success={this.state.success}
+                        message={this.state.message}
                     />
                 );
             case 3:
@@ -124,6 +167,8 @@ class App extends React.Component {
                         setPageToLogin={() => this.setState({ page: 1 })}
                         setPageToGlobe={() => this.setState({ page: 3 })}
                         setPageToTravelList={() => this.setState({ page: 4 })}
+                        success={this.state.success}
+                        message={this.state.message}
                     />
                 );
             case 4:
@@ -134,6 +179,8 @@ class App extends React.Component {
                         setPageToLogin={() => this.setState({ page: 1 })}
                         setPageToGlobe={() => this.setState({ page: 3 })}
                         setPageToTravelList={() => this.setState({ page: 4 })}
+                        success={this.state.success}
+                        message={this.state.message}
                     />
                 );
             case 5:

@@ -12,6 +12,8 @@ class TravelListPage extends React.Component {
     render() {
         return (
             <Page
+                success={this.props.success}
+                message={this.props.message}
                 setPageToLogin={this.props.setPageToLogin}
                 setPageToGlobe={this.props.setPageToGlobe}>
                 <h1>Zalogowano jako {this.props.username}</h1>

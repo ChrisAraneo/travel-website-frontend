@@ -11,6 +11,8 @@ const AdminPanelPage = (props) => {
     if (props.username === "admin") {
         return (
             <Page
+                success={props.success}
+                message={props.message}
                 setPageToGlobe={props.setPageToGlobe}
                 setPageToTravelList={props.setPageToTravelList}>
                 <header className="box" style={{ maxWidth: '100%', marginLeft: 'auto', margtinRight: 'auto' }}>

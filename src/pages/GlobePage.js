@@ -12,6 +12,8 @@ class GlobePage extends React.Component {
     render() {
         return (
             <Page
+                success={this.props.success}
+                message={this.props.message}
                 setPageToLogin={this.props.setPageToLogin}
                 setPageToTravelList={this.props.setPageToTravelList}>
                 <h1>Zalogowano jako {this.props.username}</h1>

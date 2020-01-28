@@ -11987,8 +11987,8 @@ form:not(:last-of-type) {
   color: #e6c9a7;
   -webkit-box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
           box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#5b3d1a), to(#7b5223));
-  background-image: linear-gradient(#5b3d1a, #7b5223);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#503516), to(#7b5223));
+  background-image: linear-gradient(#503516, #7b5223);
   cursor: not-allowed;
 }
 

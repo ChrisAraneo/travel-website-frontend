@@ -55,15 +55,20 @@ class InputSelect extends React.Component {
                             value={this.state.id}
                             style={{ width: '100%' }}>
                             <option value={-1}>Wybierz...</option>
-                            {this.props.data.map(item => {
-                                return (
-                                    <option
-                                        key={item[this.props.value]}
-                                        value={Number(item[this.props.value])}>
-                                        {item[this.props.name]}
-                                    </option>
-                                );
-                            })}
+                            {
+                                this.props.data ?
+                                    this.props.data.map(item => {
+                                        return (
+                                            <option
+                                                key={item[this.props.value]}
+                                                value={Number(item[this.props.value])}>
+                                                {item[this.props.name]}
+                                            </option>
+                                        );
+                                    })
+                                    :
+                                    null
+                            }
                         </select>
                     </div>
                     <span className="icon is-small is-left">

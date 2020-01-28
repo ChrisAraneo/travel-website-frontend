@@ -30,7 +30,7 @@ class InputList extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.state.selectedIndex < 0) {
+        if (this.state.selectedIndex < 0 && this.props.data) {
             if (this.props.data.length > 0) {
                 this.setState({ selectedIndex: this.props.data[0][this.props.value] })
             }
@@ -92,11 +92,16 @@ class InputList extends React.Component {
                     <div className="control is-expanded has-icons-left">
                         <div className={`select ${this.state.invalid ? 'is-danger' : ''}`} style={{ width: '100%' }}>
                             <select onChange={this.onChange} value={this.state.selectedIndex} style={{ width: '100%' }}>
-                                {this.props.data.map((item, index) => {
-                                    return (
-                                        <option key={item[this.props.value]} value={index}> {this.props.name(item)}</option>
-                                    );
-                                })}
+                                {
+                                    this.props.data ?
+                                        this.props.data.map((item, index) => {
+                                            return (
+                                                <option key={item[this.props.value]} value={index}> {this.props.name(item)}</option>
+                                            );
+                                        })
+                                        :
+                                        null
+                                }
                             </select>
                         </div>
                         <span className="icon is-small is-left">
@@ -105,17 +110,20 @@ class InputList extends React.Component {
                     </div>
                     <div className="control">
                         {
-                            this.props.data.length > 0 ?
-                                <button
-                                    className="button is-primary"
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                        const index = this.state.selectedIndex;
-                                        const item = this.props.data[index];
-                                        this.add(item);
-                                    }}>
-                                    {this.props.button}
-                                </button>
+                            this.props.data ?
+                                this.props.data.length > 0 ?
+                                    <button
+                                        className="button is-primary"
+                                        onClick={(event) => {
+                                            event.preventDefault();
+                                            const index = this.state.selectedIndex;
+                                            const item = this.props.data[index];
+                                            this.add(item);
+                                        }}>
+                                        {this.props.button}
+                                    </button>
+                                    :
+                                    null
                                 :
                                 null
                         }

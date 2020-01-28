@@ -14,6 +14,7 @@ class FormLogIn extends React.Component {
     }
 
     state = {
+        username: 'user',
         password: '',
 
         success: false,
@@ -43,6 +44,9 @@ class FormLogIn extends React.Component {
                         if (this.state.token !== null && this.state.token !== undefined) {
                             this.props.setToken(this.state.token);
                         }
+                        if (this.state.username !== null && this.state.username !== undefined) {
+                            this.props.setUsername(this.state.username);
+                        }
                     });
 
                 })
@@ -64,7 +68,7 @@ class FormLogIn extends React.Component {
                 title="Podaj hasło"
                 success={this.state.success}
                 message={this.state.message}
-                action={() => this.handleLogIn('user', this.state.password)}
+                action={() => this.handleLogIn(this.state.username, this.state.password)}
                 button="Wejdź na stronę">
                 <InputPassword
                     label="Hasło"

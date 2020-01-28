@@ -40,10 +40,14 @@ class FormLogIn extends React.Component {
                     this.setState({
                         success: result.success,
                         message: result.message,
-                        token: result.data
+                        token: result.token,
+                        username: result.username
                     }, () => {
                         if (this.state.token !== null && this.state.token !== undefined) {
                             this.props.setToken(this.state.token);
+                        }
+                        if (this.state.username !== null && this.state.username !== undefined) {
+                            this.props.setUsername(this.state.username);
                         }
                     });
 

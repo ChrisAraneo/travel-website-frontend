@@ -4,7 +4,7 @@ import '../styles/index.css';
 
 import Page from '../components/Page';
 
-class GlobePage extends React.Component {
+class TravelListPage extends React.Component {
     state = {
         locations: null
     }
@@ -13,11 +13,11 @@ class GlobePage extends React.Component {
         return (
             <Page
                 setPageToLogin={this.props.setPageToLogin}
-                setPageToTravelList={this.props.setPageToTravelList}>
+                setPageToGlobe={this.props.setPageToGlobe}>
                 <h1>Zalogowano jako {this.props.username}</h1>
             </Page>
         );
     }
 }
 
-export default GlobePage;
+export default TravelListPage;

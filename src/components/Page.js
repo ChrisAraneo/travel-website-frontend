@@ -12,6 +12,7 @@ class Page extends React.Component {
     }
 
     render() {
+        const { success, message } = this.props.bundle;
         return (
             <main id="page-wrapper">
                 <div id="page-container" className="box">
@@ -21,14 +22,16 @@ class Page extends React.Component {
                             setPageToGlobe={this.props.setPageToGlobe}
                             setPageToTravelList={this.props.setPageToTravelList} />
                         <Message
-                            header={this.props.success ? 'OK' : 'Błąd'}
-                            type={this.props.success ? 'success' : 'danger'}
-                            visible={!this.props.success && this.state.messageVisible}
+                            header={success ? 'OK' : 'Błąd'}
+                            type={success ? 'success' : 'danger'}
+                            visible={!success && this.state.messageVisible}
                             onClick={() => { this.setState({ messageVisible: false }) }}>
-                            {this.props.message}
+                            {message}
                         </Message>
                         {this.props.children}
-                        <SiteFooter setPageToLogin={this.props.setPageToLogin} />
+                        <SiteFooter
+                            bundle={this.props.bundle}
+                            setPageToLogin={this.props.setPageToLogin} />
                     </div>
                 </div>
             </main>

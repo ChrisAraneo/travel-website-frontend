@@ -5,8 +5,7 @@ import '../styles/index.css';
 
 const LogInGuestPage = (props) => (
     <Page
-        success={props.success}
-        message={props.message}
+        bundle={props.bundle}
         setPageToLogin={props.setPageToLogin}>
         <FormLogInGuest
             setToken={props.setToken}

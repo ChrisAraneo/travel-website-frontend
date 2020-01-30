@@ -8,23 +8,22 @@ import Title from '../components/Title';
 import '../styles/index.css';
 
 const AdminPanelPage = (props) => {
-    if (props.username === "admin") {
+    if (props.bundle.username === "admin") {
         return (
             <Page
-                success={props.success}
-                message={props.message}
+                bundle={props.bundle}
                 setPageToGlobe={props.setPageToGlobe}
                 setPageToTravelList={props.setPageToTravelList}>
                 <header className="box" style={{ maxWidth: '100%', marginLeft: 'auto', margtinRight: 'auto' }}>
-                    <Title>{`Zalogowano jako ${props.username}`}</Title>
+                    <Title>{`Zalogowano jako ${props.bundle.username}`}</Title>
                 </header>
-                <FormCreateUser token={props.token} />
-                <FormCreateAuthor token={props.token} />
-                <FormCreateMeetingPoint token={props.token} />
+                <FormCreateUser token={props.bundle.token} />
+                <FormCreateAuthor token={props.bundle.token} />
+                <FormCreateMeetingPoint token={props.bundle.token} />
                 <FormCreateTravel
                     token={props.token}
-                    meetingpoints={props.meetingpoints}
-                    authors={props.authors} />
+                    meetingpoints={props.bundle.meetingpoints}
+                    authors={props.bundle.authors} />
                 {props.children}
             </Page>
         );

@@ -20,7 +20,7 @@ class TravelListPage extends React.Component {
                 {
                     fulltravels ?
                         (
-                            <div className="box">
+                            <div className="box has-background-dark">
                                 {
                                     fulltravels.map(item => (<TravelListItem key={item.id_travel} travel={item} />))
                                 }

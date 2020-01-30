@@ -11971,15 +11971,15 @@ form:not(:last-of-type) {
   -webkit-box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
           box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #835725;
   border-width: 0;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#7b5223), to(#63421c));
-  background-image: linear-gradient(#7b5223, #63421c);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#7f5524), to(#67451d));
+  background-image: linear-gradient(#7f5524, #67451d);
 }
 
 #navigation .button:hover {
   -webkit-box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #97652b;
           box-shadow: 0 0.5em 2em 0em black, 0 0px 0 3px #97652b;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#875a26), to(#6f4a1f));
-  background-image: linear-gradient(#875a26, #6f4a1f);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#8f5f28), to(#7b5223));
+  background-image: linear-gradient(#8f5f28, #7b5223);
 }
 
 #navigation .button.is-primary:active, #navigation .button.is-primary.is-active {
@@ -12016,6 +12016,45 @@ form:not(:last-of-type) {
   padding: 2rem;
   display: inline-block;
   text-align: center;
+}
+
+.travel-list-item {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#7f5524), to(#67451d));
+  background-image: linear-gradient(#7f5524, #67451d);
+  padding: 1.33333rem 1rem;
+}
+
+.travel-list-item p {
+  font-size: 1.0rem;
+  line-height: 1;
+  color: #ccaa66;
+}
+
+.travel-list-item .subtitle, .travel-list-item .title, .travel-list-item h1, .travel-list-item h2, .travel-list-item h3, .travel-list-item h4, .travel-list-item p {
+  text-align: center;
+}
+
+.travel-list-item .subtitle {
+  color: #ccaa66;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+}
+
+.travel-list-item .title {
+  color: white;
+  padding: 0;
+  margin: 0.33em 0;
+  text-decoration: none;
+}
+
+.travel-list-item:hover {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#8f5f28), to(#7b5223));
+  background-image: linear-gradient(#8f5f28, #7b5223);
+}
+
+.travel-list-item:hover .title {
+  text-decoration: underline;
 }
 
 /* MOBILE */

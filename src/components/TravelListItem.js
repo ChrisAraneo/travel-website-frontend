@@ -1,6 +1,10 @@
 import React from 'react';
 import '../styles/index.css';
 
+// import Title from './Title';
+
+
+
 const TravelListItem = (props) => {
 
     const { title, location, authors } = props.travel;
@@ -9,10 +13,12 @@ const TravelListItem = (props) => {
     authors.forEach(author => names.push(`${author.firstname} ${author.lastname}`));
 
     return (
-        <div>
-            <h2>{location}</h2>
-            <h1>{title}</h1>
-            <h3>{names.join(", ")}</h3>
+        <div className="box travel-list-item">
+            <a>
+                <p>{location}</p>
+                <h1 className="title is-spaced">{title}</h1>
+                <h3 className="subtitle">{names.join(", ")}</h3>
+            </a>
         </div>
     );
 }

@@ -3,6 +3,9 @@
 /.pnp
 .pnp.js
 
+# scss map files
+/src/styles/*.map
+
 # testing
 /coverage
 

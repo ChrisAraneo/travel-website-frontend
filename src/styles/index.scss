@@ -56,8 +56,8 @@ $input-icon-color: lighten($input-border-color, 7%);
 $input-icon-active-color: $input-hover-border-color;
 
 /* BUTTONS */
-$navigation-button-background: linear-gradient(lighten($primary, 3%), darken($primary, 3%));
-$navigation-button-hover-background: linear-gradient(lighten($primary, 6%), darken($primary, 0%));
+$navigation-button-background: linear-gradient(lighten($primary, 4%), darken($primary, 2%));
+$navigation-button-hover-background: linear-gradient(lighten($primary, 8%), lighten($primary, 3%));
 $navigation-button-active-background: linear-gradient(darken($primary, 8%), lighten($primary, 3%));
 
 /* FILE BUTTON */
@@ -189,7 +189,40 @@ form:not(:last-of-type) {
     }
 }
 
+.travel-list-item {
+    background-image: $navigation-button-background;
+    // background: linear-gradient(0deg, darken($scheme-main, 25%), lighten($primary, 50%));
+    padding: $box-padding/1.5 $box-padding/2;
 
+    p {
+        font-size: 1.0rem;
+        line-height: 1;
+        color: $light;
+    }
+
+    .subtitle, .title, h1, h2, h3, h4, p {
+        text-align: center;
+    }
+    .subtitle {
+        color: $light;
+        font-weight: bold;
+        padding: 0;
+        margin: 0;
+    }
+    .title {
+        color: white;
+        padding: 0;
+        margin: 0.33em 0;
+        text-decoration: none;
+    }
+}
+.travel-list-item:hover {
+    background-image: $navigation-button-hover-background;
+
+    .title {
+        text-decoration: underline;
+    }
+}
 
 /* MOBILE */
 $breakpoint: 768px;

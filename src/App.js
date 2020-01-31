@@ -3,6 +3,7 @@ import React from 'react';
 import config from './config/config';
 import './styles/index.css';
 
+import Page from './components/Page';
 import Background from './components/Background';
 import LogInGuestPage from './pages/LogInGuestPage';
 import AdminPanelPage from './pages/AdminPanelPage';
@@ -20,6 +21,8 @@ class App extends React.Component {
         this.fetchAuthorGroups = this.fetchAuthorGroups.bind(this);
         this.fetchAll = this.fetchAll.bind(this);
         this.createFullTravelArray = this.createFullTravelArray.bind(this);
+
+        this.setupGlobe = this.setupGlobe.bind(this);
     }
 
     state = {
@@ -39,7 +42,12 @@ class App extends React.Component {
         message: ''
     }
 
-    fetchAll() {
+    componentWillUnmount() {
+        console.log("UNMOUNTED");
+        window.location.reload();
+    }
+
+    fetchAll(successCallback) {
         this.fetchMeetingPoints(
             () => this.fetchAuthors(
                 () => this.fetchAuthorGroups(
@@ -48,7 +56,11 @@ class App extends React.Component {
                             () => {
                                 this.setState({
                                     fulltravels: this.createFullTravelArray(this.state.travels, this.state.authorgroups, this.state.authors, this.state.meetingpoints, this.state.photos)
-                                }, () => console.log(this.state));
+                                }, () => {
+                                    if (successCallback) {
+                                        successCallback();
+                                    }
+                                });
                             }
                         )
                     )
@@ -174,30 +186,54 @@ class App extends React.Component {
         return array;
     }
 
-    renderPage() {
+    setupGlobe(successCallback) {
+        const id = "webglearthscript";
+        const src = "http://www.webglearth.com/v2/api.js";
+        const div_id = "earth-div";
+        const container_id = `${div_id}-container`;
+        if (!document.getElementById(id)) {
+            const script = document.createElement("script");
+            script.id = id;
+            script.src = src;
+            script.async = true;
+            script.crossOrigin = true;
+            script.onerror = (error) => alert(error.message);
+            script.onload = () => {
+                if (document.getElementById(container_id) && document.getElementById(id)) {
+                    const container = document.getElementById(container_id);
 
+                    const earth = document.createElement("div");
+                    earth.id = div_id;
+                    container.appendChild(earth);
+
+                    let object = new window.WE.map(div_id);
+                    window.WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(object);
+
+                    if (successCallback) {
+                        successCallback();
+                    }
+                }
+            };
+            document.body.appendChild(script);
+        }
+    }
+
+    renderPage(bundle) {
         const loginCallback = (username) => {
             if (username === 'admin') {
                 this.setState({ page: 2 },
-                    () => this.fetchAll());
+                    () => this.fetchAll(
+                        () => this.setupGlobe()
+                    )
+                );
             } else if (username) {
                 this.setState({ page: 3 },
-                    () => this.fetchAll());
+                    () => this.fetchAll(
+                        () => this.setupGlobe()
+                    )
+                );
             }
         };
-
-        // Bundle of props data
-        // Instead of giving individual props we give an object
-        const bundle = {
-            token: this.state.token,
-            username: this.state.username,
-            success: this.state.success,
-            message: this.state.message,
-            authors: this.state.authors,
-            meetingpoints: this.state.meetingpoints,
-            authorgroups: this.state.authorgroups,
-            fulltravels: this.state.fulltravels,
-        }
 
         switch (this.state.page) {
             case 0:
@@ -208,9 +244,6 @@ class App extends React.Component {
                             () => loginCallback(this.state.username))}
                         setUsername={username => this.setState({ username },
                             () => loginCallback(this.state.username))}
-                        setPageToLogin={() => this.setState({ page: 1 })}
-                        setPageToGlobe={() => this.setState({ page: 3 })}
-                        setPageToTravelList={() => this.setState({ page: 4 })}
                     />
                 );
             case 1:
@@ -220,37 +253,26 @@ class App extends React.Component {
                         setToken={token => this.setState({ token })}
                         setUsername={username => this.setState({ username },
                             () => loginCallback(this.state.username))}
-                        setPageToLogin={() => this.setState({ page: 1 })}
-                        setPageToGlobe={() => this.setState({ page: 3 })}
-                        setPageToTravelList={() => this.setState({ page: 4 })}
+
                     />
                 );
             case 2:
                 return (
                     <AdminPanelPage
                         bundle={bundle}
-                        setPageToLogin={() => this.setState({ page: 1 })}
-                        setPageToGlobe={() => this.setState({ page: 3 })}
-                        setPageToTravelList={() => this.setState({ page: 4 })}
+
                     />
                 );
             case 3:
                 return (
                     <GlobePage
                         bundle={bundle}
-                        setPageToLogin={() => this.setState({ page: 1 })}
-                        setPageToGlobe={() => this.setState({ page: 3 })}
-                        setPageToTravelList={() => this.setState({ page: 4 })}
                     />
                 );
             case 4:
                 return (
                     <TravelListPage
-                        bundle={bundle}
-                        setPageToLogin={() => this.setState({ page: 1 })}
-                        setPageToGlobe={() => this.setState({ page: 3 })}
-                        setPageToTravelList={() => this.setState({ page: 4 })}
-                    />
+                        bundle={bundle} />
                 );
             case 5:
                 return (
@@ -266,10 +288,36 @@ class App extends React.Component {
     }
 
     render() {
+
+        if (this.state.page !== 3) {
+            document.body.focus();
+        }
+
+        const bundle = {
+            token: this.state.token,
+            username: this.state.username,
+            success: this.state.success,
+            message: this.state.message,
+            authors: this.state.authors,
+            meetingpoints: this.state.meetingpoints,
+            authorgroups: this.state.authorgroups,
+            fulltravels: this.state.fulltravels,
+        }
+
         return (
             <>
                 <Background />
-                {this.renderPage()}
+                <Page
+                    bundle={bundle}
+                    setPageToLogin={() => this.setState({ page: 1 })}
+                    setPageToGlobe={() => this.setState({ page: 3 })}
+                    setPageToTravelList={() => this.setState({ page: 4 })}>
+                    <div id="earth-div-container" style={{
+                        width: '100%',
+                        display: (this.state.page === 3 ? 'block' : 'none')
+                    }} />
+                    {this.renderPage(bundle)}
+                </Page>
             </>
         );
     }

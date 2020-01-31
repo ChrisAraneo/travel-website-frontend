@@ -9,30 +9,21 @@ import TravelListItem from '../components/TravelListItem';
 class TravelListPage extends React.Component {
 
     render() {
-
         const { fulltravels } = this.props.bundle;
 
-        return (
-            <Page
-                bundle={this.props.bundle}
-                setPageToLogin={this.props.setPageToLogin}
-                setPageToGlobe={this.props.setPageToGlobe}>
-                {
-                    fulltravels ?
-                        (
-                            <div className="box has-background-dark">
-                                {
-                                    fulltravels.map(item => (<TravelListItem key={item.id_travel} travel={item} />))
-                                }
-                            </div>
-                        )
-                        :
-                        <div className="box">
-                            <Title>Brak prelekcji w bazie danych</Title>
-                        </div>
-                }
-            </Page>
-        );
+        if (fulltravels) {
+            return (
+                <div className="box has-background-dark" >
+                    {
+                        fulltravels.map(item => (
+                            <TravelListItem key={item.id_travel} travel={item} />
+                        ))
+                    }
+                </div>
+            );
+        }
+
+        return null;
     }
 }
 

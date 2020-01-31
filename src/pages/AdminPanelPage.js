@@ -10,10 +10,7 @@ import '../styles/index.css';
 const AdminPanelPage = (props) => {
     if (props.bundle.username === "admin") {
         return (
-            <Page
-                bundle={props.bundle}
-                setPageToGlobe={props.setPageToGlobe}
-                setPageToTravelList={props.setPageToTravelList}>
+            <div>
                 <header className="box" style={{ maxWidth: '100%', marginLeft: 'auto', margtinRight: 'auto' }}>
                     <Title>{`Zalogowano jako ${props.bundle.username}`}</Title>
                 </header>
@@ -25,18 +22,13 @@ const AdminPanelPage = (props) => {
                     meetingpoints={props.bundle.meetingpoints}
                     authors={props.bundle.authors} />
                 {props.children}
-            </Page>
+            </div>
         );
     } else {
         return (
-            <Page
-                setPageToLogin={props.setPageToLogin}
-                setPageToGlobe={props.setPageToGlobe}
-                setPageToTravelList={props.setPageToTravelList}>
-                <div className="box">
-                    <h1 className="title">Niestety nie jesteś zalogowany jako admin</h1>
-                </div>
-            </Page>
+            <div className="box">
+                <h1 className="title">Niestety nie jesteś zalogowany jako admin</h1>
+            </div>
         );
     }
 }

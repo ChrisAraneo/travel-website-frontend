@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="./favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="description" content="" />
+    <link rel="manifest" href="./manifest.json" />
+    <title>Travel Website Frontend - Globe</title>
+    <script src="http://www.webglearth.com/v2/api.js"></script>
+    <script>
+        var earth = null;
+        var clickFunction = function () { };
+
+        function init() {
+            earth = new WE.map('earth-div');
+            WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(earth);
+
+            earth.setView([51.505, 0], 6);
+        }
+        function addMarker(lat, lon, location, author, id_travel) {
+            var marker = WE.marker([lat, lon]).addTo(earth);
+            marker.bindPopup("<a onClick=\"clickFunction('" + id_travel + "')\">" + location + "</a>", { maxWidth: 150, closeButton: true }).openPopup();
+        }
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        #earth-div {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body onload="init()">
+    <div id="earth-div"></div>
+</body>
+
+</html>

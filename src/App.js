@@ -10,6 +10,7 @@ import AdminPanelPage from './pages/AdminPanelPage';
 import LogInPage from './pages/LogInPage';
 import GlobePage from './pages/GlobePage';
 import TravelListPage from './pages/TravelListPage';
+import TravelPage from './pages/TravelPage';
 
 class App extends React.Component {
 
@@ -22,7 +23,7 @@ class App extends React.Component {
         this.fetchAll = this.fetchAll.bind(this);
         this.createFullTravelArray = this.createFullTravelArray.bind(this);
 
-        this.setupGlobe = this.setupGlobe.bind(this);
+        this.goToTravelPage = this.goToTravelPage.bind(this);
     }
 
     state = {
@@ -37,13 +38,15 @@ class App extends React.Component {
         photos: [],
 
         fulltravels: [],
+        selectedTravel: null,
 
         success: true,
-        message: ''
+        message: '',
+
+        scriptLoaded: false
     }
 
     componentWillUnmount() {
-        console.log("UNMOUNTED");
         window.location.reload();
     }
 
@@ -186,50 +189,30 @@ class App extends React.Component {
         return array;
     }
 
-    setupGlobe(successCallback) {
-        const id = "webglearthscript";
-        const src = "http://www.webglearth.com/v2/api.js";
-        const div_id = "earth-div";
-        const container_id = `${div_id}-container`;
-        if (!document.getElementById(id)) {
-            const script = document.createElement("script");
-            script.id = id;
-            script.src = src;
-            script.async = true;
-            script.crossOrigin = true;
-            script.onerror = (error) => alert(error.message);
-            script.onload = () => {
-                if (document.getElementById(container_id) && document.getElementById(id)) {
-                    const container = document.getElementById(container_id);
-
-                    const earth = document.createElement("div");
-                    earth.id = div_id;
-                    container.appendChild(earth);
-
-                    let object = new window.WE.map(div_id);
-                    window.WE.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(object);
-
-                    if (successCallback) {
-                        successCallback();
-                    }
-                }
-            };
-            document.body.appendChild(script);
-        }
+    goToTravelPage(id) {
+        this.setState({
+            selectedTravel: id
+        },
+            () => this.setState({ page: 5 })
+        );
     }
 
     renderPage(bundle) {
         const loginCallback = (username) => {
             if (username === 'admin') {
-                this.setState({ page: 2 },
-                    () => this.fetchAll(
-                        () => this.setupGlobe()
-                    )
-                );
+                if (this.state.fulltravels.length < 1) {
+                    this.setState({ page: 4 },
+                        this.fetchAll(
+                            () => this.setState({ page: 2 })
+                        )
+                    );
+                } else {
+                    this.setState({ page: 2 })
+                }
             } else if (username) {
-                this.setState({ page: 3 },
-                    () => this.fetchAll(
-                        () => this.setupGlobe()
+                this.setState({ page: 4 },
+                    this.fetchAll(
+                        () => this.setState({ page: 3 })
                     )
                 );
             }
@@ -267,6 +250,7 @@ class App extends React.Component {
                 return (
                     <GlobePage
                         bundle={bundle}
+                        goToTravelPage={this.goToTravelPage}
                     />
                 );
             case 4:
@@ -276,11 +260,10 @@ class App extends React.Component {
                 );
             case 5:
                 return (
-                    null
-                    // <TravelPage
-                    //     token={token}
-
-                    // />
+                    <TravelPage
+                        bundle={bundle}
+                        selectedTravel={this.state.selectedTravel}
+                    />
                 );
             default:
                 return null;
@@ -288,11 +271,6 @@ class App extends React.Component {
     }
 
     render() {
-
-        if (this.state.page !== 3) {
-            document.body.focus();
-        }
-
         const bundle = {
             token: this.state.token,
             username: this.state.username,
@@ -310,12 +288,16 @@ class App extends React.Component {
                 <Page
                     bundle={bundle}
                     setPageToLogin={() => this.setState({ page: 1 })}
-                    setPageToGlobe={() => this.setState({ page: 3 })}
-                    setPageToTravelList={() => this.setState({ page: 4 })}>
-                    <div id="earth-div-container" style={{
-                        width: '100%',
-                        display: (this.state.page === 3 ? 'block' : 'none')
-                    }} />
+                    setPageToGlobe={
+                        this.state.page !== 3 && this.state.page >= 2 ?
+                            () => this.setState({ page: 3 })
+                            : null
+                    }
+                    setPageToTravelList={
+                        this.state.page !== 4 && this.state.page >= 2 ?
+                            () => this.setState({ page: 4 })
+                            : null
+                    }>
                     {this.renderPage(bundle)}
                 </Page>
             </>

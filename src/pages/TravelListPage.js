@@ -1,9 +1,6 @@
 import React from 'react';
 import '../styles/index.css';
 
-import Page from '../components/Page';
-import Title from '../components/Title';
-import TravlListItem from '../components/TravelListItem';
 import TravelListItem from '../components/TravelListItem';
 
 class TravelListPage extends React.Component {

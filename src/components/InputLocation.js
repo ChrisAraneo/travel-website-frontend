@@ -47,7 +47,7 @@ class InputLocation extends React.Component {
             .then(result => {
                 this.setState({
                     results: result
-                }, () => console.log(result));
+                }, () => null);
             })
             .catch(error => this.setState({
                 invalid: String(error.message)

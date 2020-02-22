@@ -4,6 +4,7 @@
 .pnp.js
 
 # scss map files
+/src/styles/*.css
 /src/styles/*.map
 
 # testing

@@ -1,7 +1,5 @@
-### TODO 20-01-2020
-Refaktor FormCreateTravel
+### TODO 22-02
 
-### Później...
-Lista prelekcji
-Strona prelekcji
-Globus
+1. Poprawić Pop Upy na globusie
+2. Zakończyć footer strony
+3. Zrobić wyszukiwarkę

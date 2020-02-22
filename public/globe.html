@@ -22,7 +22,7 @@
         }
         function addMarker(lat, lon, location, author, id_travel) {
             var marker = WE.marker([lat, lon]).addTo(earth);
-            marker.bindPopup("<a onClick=\"clickFunction('" + id_travel + "')\">" + location + "</a>", { maxWidth: 150, closeButton: true }).openPopup();
+            marker.bindPopup("<a href=\"#\" onClick=\"clickFunction('" + id_travel + "')\">" + location + "</a>", { maxWidth: 150, closeButton: true }).openPopup();
         }
     </script>
     <style>

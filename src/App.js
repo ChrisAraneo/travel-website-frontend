@@ -23,7 +23,10 @@ class App extends React.Component {
         this.fetchAll = this.fetchAll.bind(this);
         this.createFullTravelArray = this.createFullTravelArray.bind(this);
 
+        this.goToTravelListPage = this.goToTravelListPage.bind(this);
         this.goToTravelPage = this.goToTravelPage.bind(this);
+        this.goToPrevTravel = this.goToPrevTravel.bind(this);
+        this.goToNextTravel = this.goToNextTravel.bind(this);
     }
 
     state = {
@@ -38,7 +41,11 @@ class App extends React.Component {
         photos: [],
 
         fulltravels: [],
-        selectedTravel: null,
+
+        travel: null,
+        travel_prev_id: null,
+        travel_next_id: null,
+        travel_photos: [],
 
         success: true,
         message: '',
@@ -47,7 +54,7 @@ class App extends React.Component {
     }
 
     componentWillUnmount() {
-        window.location.reload();
+        // window.location.reload();
     }
 
     fetchAll(successCallback) {
@@ -152,6 +159,24 @@ class App extends React.Component {
             }));
     }
 
+    fetchPhoto(filename, successCallback) {
+        fetch(`${config.url}/api/get/photo.php?token=${this.state.token}&filename=${filename}`, {
+            method: 'GET'
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (successCallback) {
+                    successCallback(result);
+                }
+            })
+            .catch(error => {
+                this.setState({
+                    success: false,
+                    message: String(error)
+                })
+            });
+    }
+
     createFullTravelArray(travels, authorgroups, authors, meetingpoints, photos) {
         const array = [];
 
@@ -173,7 +198,7 @@ class App extends React.Component {
                 id_travel: id_travel,
                 title,
                 location,
-                date,
+                date: new Date(date),
                 hour,
                 meetingpoint: meetingpoints.find(item => item.id_meetingpoint == id_meetingpoint),
                 latitude,
@@ -186,15 +211,75 @@ class App extends React.Component {
             array.push(travel);
         }
 
+        array.sort((A, B) => B.date - A.date);
+
         return array;
     }
 
+    goToTravelListPage() {
+        this.setState({ page: 4 });
+    }
+
     goToTravelPage(id) {
-        this.setState({
-            selectedTravel: id
-        },
-            () => this.setState({ page: 5 })
+        this.setState({ travel: null, travel_photos: [], travel_next_id: null, travel_prev_id: null },
+            () => {
+
+                const { fulltravels } = this.state;
+                if (fulltravels.length > 0) {
+                    let prev = null;
+                    let next = null
+                    const travel = fulltravels.find((item, i, array) => {
+                        if (item.id_travel === id) {
+                            if (array[i + 1]) {
+                                next = array[i + 1].id_travel;
+                            }
+                            if (array[i - 1]) {
+                                prev = array[i - 1].id_travel;
+                            }
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                    if (travel) {
+                        if (travel.photos) {
+                            travel.photos.forEach(photo => {
+                                this.fetchPhoto(
+                                    photo.filename,
+                                    (photo) => {
+                                        const obj = {
+                                            original: photo.data,
+                                            thumbnail: photo.data
+                                        }
+                                        this.setState({ travel_photos: [...this.state.travel_photos, obj] });
+                                    }
+                                )
+                            })
+                        }
+                        this.setState({ travel, travel_next_id: next, travel_prev_id: prev },
+                            () => this.setState({ page: 5 })
+                        );
+                    } else {
+                        this.setState({ travel: null, travel_next_id: null, travel_prev_id: null },
+                            () => this.setState({ page: 5 })
+                        );
+                    }
+                }
+
+            }
         );
+    }
+
+    goToPrevTravel() {
+        if (this.state.travel_prev_id !== null && this.state.travel_prev_id !== undefined) {
+            this.goToTravelPage(this.state.travel_prev_id);
+        }
+    }
+
+    goToNextTravel() {
+        if (this.state.travel_next_id !== null && this.state.travel_next_id !== undefined) {
+            this.goToTravelPage(this.state.travel_next_id);
+        }
     }
 
     renderPage(bundle) {
@@ -256,13 +341,19 @@ class App extends React.Component {
             case 4:
                 return (
                     <TravelListPage
-                        bundle={bundle} />
+                        bundle={bundle}
+                        goToTravelPage={this.goToTravelPage}
+                    />
                 );
             case 5:
                 return (
                     <TravelPage
                         bundle={bundle}
-                        selectedTravel={this.state.selectedTravel}
+                        travel={this.state.travel}
+                        photos={this.state.travel_photos}
+                        goToTravelListPage={this.goToTravelListPage}
+                        goToPrevTravel={this.state.travel_prev_id !== null ? this.goToPrevTravel : null}
+                        goToNextTravel={this.state.travel_next_id !== null ? this.goToNextTravel : null}
                     />
                 );
             default:

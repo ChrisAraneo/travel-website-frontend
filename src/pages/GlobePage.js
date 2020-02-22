@@ -1,5 +1,6 @@
 
 import React from 'react';
+import Message from '../components/Message';
 import '../styles/index.css';
 
 class GlobePage extends React.Component {
@@ -10,7 +11,8 @@ class GlobePage extends React.Component {
     }
 
     state = {
-        loaded: false
+        loaded: false,
+        messageVisible: true
     }
 
     initialize() {
@@ -36,23 +38,26 @@ class GlobePage extends React.Component {
     render() {
         const { fulltravels } = this.props.bundle;
         return (
-            <div id="globe-container" className="box">
-                {
-                    this.state.loaded && fulltravels.length > 0 ?
-                        null
-                        :
-                        <h1 className="title">Ładowanie...</h1>
-                }
-                <iframe
-                    id="globe-iframe"
-                    src={process.env.PUBLIC_URL + '/globe.html'}
-                    onLoad={() => this.setState({ loaded: true }, () => {
-                        this.initialize();
-                        this.addMarkers();
-                    })}
-                    style={{}}
-                />
-            </div>
+            <>
+                <Message
+                    header={'Ładowanie'}
+                    type={'info'}
+                    visible={!this.state.loaded && this.state.messageVisible}
+                    onClick={() => this.setState({ messageVisible: false })}>
+                    Trwa ładowanie globusu. Proszę czekać.
+                </Message>
+                <div id="globe-container" className="box">
+                    <iframe
+                        id="globe-iframe"
+                        src={process.env.PUBLIC_URL + '/globe.html'}
+                        onLoad={() => this.setState({ loaded: true }, () => {
+                            this.initialize();
+                            this.addMarkers();
+                        })}
+                        style={{}}
+                    />
+                </div>
+            </>
         );
     }
 

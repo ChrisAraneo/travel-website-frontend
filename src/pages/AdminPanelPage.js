@@ -18,7 +18,7 @@ const AdminPanelPage = (props) => {
                 <FormCreateAuthor token={props.bundle.token} />
                 <FormCreateMeetingPoint token={props.bundle.token} />
                 <FormCreateTravel
-                    token={props.token}
+                    token={props.bundle.token}
                     meetingpoints={props.bundle.meetingpoints}
                     authors={props.bundle.authors} />
                 {props.children}

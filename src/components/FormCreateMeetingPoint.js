@@ -37,7 +37,7 @@ class FormCreateMeetingPoint extends React.Component {
                 .then(result => this.setState({
                     success: result.success,
                     message: result.message
-                }, () => this.resetForm()))
+                }, () => {/*this.resetForm()*/}))
                 .catch(error => this.setState({
                     success: false,
                     message: String(error)

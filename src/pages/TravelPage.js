@@ -2,7 +2,7 @@ import React from 'react';
 import Title from '../components/Title';
 import TravelBreadcrumb from '../components/TravelBreadcrumb';
 import ImageGallery from 'react-image-gallery';
-import Button from '../components/Button';
+import Button from '../components/Button/Button';
 import TravelFooter from '../components/TravelFooter';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

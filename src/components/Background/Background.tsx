@@ -1,13 +1,17 @@
 import React from "react";
 import background from "../../images/background.jpg";
+import "./Background.scss";
 
-const Background: React.FC = (props) => {
+interface Props {
+  children?: any;
+}
+
+const Background: React.FC<Props> = (props: Props) => {
   return (
     <div
       id="background"
       style={{
-        background: `url(${background}) no-repeat center center fixed`,
-        backgroundSize: "cover",
+        backgroundImage: `url(${background})`,
       }}
     >
       {props.children}

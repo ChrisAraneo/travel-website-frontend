@@ -1,11 +1,11 @@
 import React, { MouseEventHandler } from "react";
-// import "../styles/index.css";
 
 interface Props {
   onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  children?: any;
 }
 
-const Button: React.FC<Props> = (props) => {
+const Button: React.FC<Props> = (props: Props) => {
   return (
     <button
       className="button is-primary"

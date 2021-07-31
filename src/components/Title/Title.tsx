@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import imageString from "../images/brush-header.png";
+import imageString from "../../images/brush-header.png";
 import "./Title.scss";
 
 interface Props {

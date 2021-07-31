@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import ImageGallery from "react-image-gallery";
 import Button from "../components/Button/Button";
-import Title from "../components/Title";
+import Title from "../components/Title/Title";
 import TravelBreadcrumb from "../components/TravelBreadcrumb";
 import TravelFooter from "../components/TravelFooter";
 import config from "../config/config";

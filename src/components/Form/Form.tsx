@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Message, { MessageType } from "../Message/Message";
-import Title from "../Title";
+import Title from "../Title/Title";
 import "./Form.scss";
 
 const MESSAGE_OK = "OK";

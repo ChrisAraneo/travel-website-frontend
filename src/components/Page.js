@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/index.css";
 import Message from "./Message/Message";
 import Navigation from "./Navigation";
-import SiteFooter from "./SiteFooter";
+import SiteFooter from "./SiteFooter/SiteFooter";
 import SiteHeader from "./SiteHeader";
 
 class Page extends React.Component {
@@ -33,7 +33,7 @@ class Page extends React.Component {
             </Message>
             {this.props.children}
             <SiteFooter
-              bundle={this.props.bundle}
+              username={this.props.bundle.username}
               setPageToLogin={this.props.setPageToLogin}
             />
           </div>

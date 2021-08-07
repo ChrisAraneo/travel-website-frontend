@@ -2,7 +2,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useState } from "react";
 import config from "../../config/config";
 import Form from "../Form/Form";
-import InputPassword from "../InputPassword";
+import InputPassword from "../InputPassword/InputPassword";
 
 const GUEST_USERNAME = "user";
 
@@ -73,9 +73,9 @@ const FormLoginGuest: React.FC<Props> = (props: Props) => {
       <InputPassword
         label="Hasło"
         icon={faLock}
-        validation={(val: string) => val.length > 5}
-        message="Hasło jest za krótkie."
-        complete={(password: string) => setPassword(password)}
+        errorMessage="Hasło jest za krótkie."
+        validation={(password: string) => password.length > 5}
+        complete={(password?: string) => setPassword(password ?? "")}
       />
     </Form>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import FormCreateAuthor from "../components/FormCreateAuthor";
 import FormCreateMeetingPoint from "../components/FormCreateMeetingPoint";
-import FormCreateTravel from "../components/FormCreateTravel";
+import FormCreateTravel from "../components/FormCreateTravel/FormCreateTravel";
 import FormCreateUser from "../components/FormCreateUser";
 import Title from "../components/Title/Title";
 import "../styles/index.css";

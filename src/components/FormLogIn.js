@@ -3,8 +3,8 @@ import React from "react";
 import config from "../config/config";
 import "../styles/index.css";
 import Form from "./Form/Form";
-import InputPassword from "./InputPassword";
-import InputText from "./InputText";
+import InputPassword from "./InputPassword/InputPassword";
+import InputText from "./InputText/InputText";
 
 class FormLogIn extends React.Component {
   constructor(props) {

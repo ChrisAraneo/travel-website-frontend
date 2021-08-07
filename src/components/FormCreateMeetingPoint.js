@@ -3,7 +3,7 @@ import React from "react";
 import config from "../config/config";
 import "../styles/index.css";
 import Form from "./Form/Form";
-import InputText from "./InputText";
+import InputText from "./InputText/InputText";
 
 class FormCreateMeetingPoint extends React.Component {
   constructor(props) {

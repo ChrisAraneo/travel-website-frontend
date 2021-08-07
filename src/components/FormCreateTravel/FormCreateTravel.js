@@ -7,16 +7,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import config from "../config/config";
-import "../styles/index.css";
-import Form from "./Form/Form";
-import InputDate from "./InputDate";
-import InputList from "./InputList";
-import InputLocation from "./InputLocation";
-import InputPhotos from "./InputPhotos";
-import InputSelect from "./InputSelect";
-import InputText from "./InputText";
-import InputTime from "./InputTime";
+import config from "../../config/config";
+import Form from "../Form/Form";
+import InputDate from "../InputDate/InputDate";
+import InputList from "../InputList/InputList";
+import InputLocation from "../InputLocation/InputLocation";
+import InputPhotos from "../InputPhotos/InputPhotos";
+import InputSelect from "../InputSelect/InputSelect";
+import InputText from "../InputText/InputText";
+import InputTime from "../InputTime";
+// import "../styles/index.css";
 
 class FormCreateTravel extends React.Component {
   constructor(props) {
@@ -288,7 +288,7 @@ class FormCreateTravel extends React.Component {
         <InputLocation
           label="Kraj podróży"
           icon={faGlobe}
-          message="Wybierz kraj podróży"
+          errorMessage="Wybierz kraj podróży"
           complete={({ location, latitude, longitude }) =>
             this.setState({ location, latitude, longitude })
           }
@@ -296,12 +296,12 @@ class FormCreateTravel extends React.Component {
 
         <InputSelect
           label="Wybierz miejsce spotkania"
-          data={this.state.meetingpoints}
-          value="id_meetingpoint"
-          name="name"
+          items={this.state.meetingpoints}
+          nameProperty="name"
+          valueProperty="id_meetingpoint"
           icon={faHome}
           complete={(id) => this.setState({ id_meetingpoint: id })}
-          message="Wybierz miejsce spotkania."
+          errorMessage="Wybierz miejsce spotkania."
         />
 
         <div className="columns" style={{ marginBottom: 0 }}>
@@ -309,7 +309,7 @@ class FormCreateTravel extends React.Component {
             <InputDate
               label="Dzień spotkania"
               complete={(date) => this.setState({ date })}
-              message="Wybierz dzień spotkania"
+              errorMessage="Wybierz dzień spotkania"
             />
           </div>
           <div className="column">
@@ -334,9 +334,9 @@ class FormCreateTravel extends React.Component {
 
         <InputPhotos
           label="Zdjęcia"
-          button="Dodaj zdjęcie"
+          buttonText="Dodaj zdjęcie"
           complete={(photos) => this.setState({ photos })}
-          message="Dodaj przynajmniej jedno zdjęcie z podróży."
+          errorMessage="Dodaj przynajmniej jedno zdjęcie z podróży."
         />
 
         <div className="field">

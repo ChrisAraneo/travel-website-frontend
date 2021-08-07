@@ -3,7 +3,7 @@ import React from "react";
 import config from "../config/config";
 import "../styles/index.css";
 import Form from "./Form/Form";
-import InputText from "./InputText";
+import InputText from "./InputText/InputText";
 
 class FormCreateAuthor extends React.Component {
   constructor(props) {
@@ -70,14 +70,14 @@ class FormCreateAuthor extends React.Component {
           label="Imię"
           icon={faUser}
           validation={(val) => val.length > 2}
-          message="Za krótkie imię."
+          errorMessage="Za krótkie imię."
           complete={(firstname) => this.setState({ firstname })}
         />
         <InputText
           label="Nazwisko"
           icon={faUser}
           validation={(val) => val.length > 2}
-          message="Za krótkie nazwisko."
+          errorMessage="Za krótkie nazwisko."
           complete={(lastname) => this.setState({ lastname })}
         />
       </Form>

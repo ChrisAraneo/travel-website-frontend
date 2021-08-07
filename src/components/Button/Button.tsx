@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from "react";
 
 interface Props {
-  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   children?: any;
 }
 

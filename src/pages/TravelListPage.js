@@ -1,5 +1,5 @@
 import React from "react";
-import TravelListItem from "../components/TravelListItem";
+import TravelListItem from "../components/TravelListItem/TravelListItem";
 import TravelListYearSeparator from "../components/TravelListYearSeparator";
 import "../styles/index.css";
 

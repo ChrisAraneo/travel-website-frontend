@@ -29,9 +29,7 @@ const InputSelect: React.FC<Props> = (props: Props) => {
   const validate = (index: number, items: any[]) => {
     const isIndexValid = index >= 0;
     const isSelectedItemInItems = isIndexValid
-      ? items.findIndex((item: any) => {
-          item[props.valueProperty] === index;
-        }) > -1
+      ? items.findIndex((item: any) => item[props.valueProperty] === index) > -1
       : false;
     const isValid = isIndexValid && isSelectedItemInItems;
     const indexNumberOrUndefined = isValid ? index : undefined;

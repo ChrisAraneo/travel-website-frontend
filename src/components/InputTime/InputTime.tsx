@@ -1,4 +1,4 @@
-import { faCalendar } from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, {
   ChangeEvent,
@@ -9,42 +9,40 @@ import React, {
 } from "react";
 import { Valid } from "../../model/valid";
 import { InputResetRef } from "../../types/InputResetRef";
+import "../styles/index.css";
 
-export const validateDate = (dateString: any) =>
-  typeof dateString === "string" && dateString.length === 10;
+export const validateTime = (timeString: any) =>
+  typeof timeString === "string" && timeString.length === 5;
 
 interface Props {
   label: string;
   errorMessage: string;
-  complete: (dateString?: string) => any;
+  complete: (text?: string) => any;
 }
 
-const InputDate: React.ForwardRefExoticComponent<
+const InputTime: React.ForwardRefExoticComponent<
   Props & React.RefAttributes<InputResetRef>
 > = forwardRef<InputResetRef, Props>(
   (props: Props, ref: ForwardedRef<InputResetRef>) => {
-    const [dateString, setDateString] = useState<string>("");
     const [valid, setValid] = useState<Valid>(Valid.NotValidated);
+    const [timeString, setTimeString] = useState<string>("");
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const dateString = event?.target?.value ?? "";
-      setDateString(dateString);
-      if (valid === Valid.Invalid || valid === Valid.Valid) {
-        validate(dateString);
-      }
+      const time = event.target.value;
+      setTimeString(time);
     };
 
-    const validate = (dateString: any) => {
-      const isValid = validateDate(dateString);
-      const dateStringOrUndefined = isValid ? dateString : undefined;
+    const validate = (timeString: string) => {
+      const isValid = validateTime(timeString);
+      const timeStringOrUndefined = isValid ? timeString : undefined;
       setValid(isValid ? Valid.Valid : Valid.Invalid);
-      props.complete(dateStringOrUndefined);
+      props.complete(timeStringOrUndefined);
     };
 
     useImperativeHandle(ref, () => ({
       reset: () => {
-        setDateString("");
         setValid(Valid.NotValidated);
+        setTimeString("");
       },
     }));
 
@@ -60,21 +58,21 @@ const InputDate: React.ForwardRefExoticComponent<
                 ? "is-danger"
                 : ""
             }`}
-            value={dateString}
-            type="date"
+            value={timeString}
+            type="time"
             onChange={onChange}
-            onBlur={() => validate(dateString)}
+            onBlur={() => validate(timeString)}
           />
           <span className="icon is-small is-left">
-            <FontAwesomeIcon icon={faCalendar} />
+            <FontAwesomeIcon icon={faClock} />
           </span>
         </div>
-        {valid == Valid.Invalid && (
+        {valid === Valid.Invalid ? (
           <p className="help is-danger">{props.errorMessage}</p>
-        )}
+        ) : null}
       </div>
     );
   }
 );
 
-export default InputDate;
+export default InputTime;

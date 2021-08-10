@@ -7,6 +7,6 @@ const config = {
   siteHeaderSubtitle:
     "Podróże to jedyna rzecz, na którą wydajemy pieniądze, a stajemy się bogatsi",
 
-  email: "tutaj.email@ee.ee",
+  email: "tutaj.email@example.com.pl",
 };
 export default config;

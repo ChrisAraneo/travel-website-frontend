@@ -1,5 +1,5 @@
 import { Author } from "./author";
-import { MeetingPoint } from "./meetingpoint";
+import { MeetingPoint } from "./meetingPoint";
 import { Photo } from "./photo";
 
 export interface Travel {

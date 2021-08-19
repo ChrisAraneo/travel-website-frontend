@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import imageString from "../../images/brush-header.png";
-import "./Title.scss";
+import styles from "./Title.module.scss";
 
 interface Props {
   children?: any;
@@ -17,7 +17,7 @@ const Title: React.FC<Props> = (props: Props) => {
 
   return (
     <h1
-      className="title"
+      className={`${styles.title}`}
       style={{
         backgroundImage: isLoading ? `url(${imageString})` : "",
       }}

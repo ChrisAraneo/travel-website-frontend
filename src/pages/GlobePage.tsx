@@ -1,33 +1,42 @@
 import React from "react";
-import Message from "../components/Message/Message";
-import "../styles/index.css";
+import Message, { MessageType } from "../components/Message/Message";
+import { Travel } from "../model/Travel";
 
-class GlobePage extends React.Component {
-  constructor(props) {
+interface Props {
+  travels: Travel[];
+  goToTravelPage: (travelId: number) => any;
+}
+
+interface State {
+  loaded: boolean;
+  messageVisible: boolean;
+}
+
+const initialState: State = {
+  loaded: false,
+  messageVisible: true,
+};
+
+class GlobePage extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
-    this.addMarkers = this.addMarkers.bind(this);
+    this.state = { ...initialState };
   }
 
-  state = {
-    loaded: false,
-    messageVisible: true,
-  };
-
-  initialize() {
-    const iframe = document.getElementById("globe-iframe");
+  initialize = () => {
+    const iframe: any = document.getElementById("globe-iframe");
     if (iframe) {
-      iframe.contentWindow.clickFunction = (id) => {
+      iframe["contentWindow"]["clickFunction"] = (id: any) => {
         this.props.goToTravelPage(id);
       };
     }
-  }
+  };
 
-  addMarkers() {
-    const { fulltravels } = this.props.bundle;
-    const iframe = document.getElementById("globe-iframe");
+  addMarkers = () => {
+    const iframe: any = document.getElementById("globe-iframe");
     if (iframe) {
       const addMarker = iframe.contentWindow.addMarker;
-      fulltravels.forEach((travel) => {
+      this.props.travels.forEach((travel: Travel) => {
         addMarker(
           Number(travel.latitude),
           Number(travel.longitude),
@@ -37,15 +46,14 @@ class GlobePage extends React.Component {
         );
       });
     }
-  }
+  };
 
-  render() {
-    const { fulltravels } = this.props.bundle;
+  render = () => {
     return (
       <>
         <Message
           header={"Ładowanie"}
-          type={"info"}
+          type={MessageType.Info}
           visible={!this.state.loaded && this.state.messageVisible}
           onClick={() => this.setState({ messageVisible: false })}
         >
@@ -66,7 +74,7 @@ class GlobePage extends React.Component {
         </div>
       </>
     );
-  }
+  };
 }
 
 export default GlobePage;

@@ -1,6 +1,6 @@
-import { Author } from "./author";
-import { MeetingPoint } from "./meetingPoint";
-import { Photo } from "./photo";
+import { Author } from "./Author";
+import { MeetingPoint } from "./MeetingPoint";
+import { Photo } from "./Photo";
 
 export interface Travel {
   authors: Author[];

@@ -3,6 +3,7 @@ import React from "react";
 export enum MessageType {
   Success = "success",
   Danger = "danger",
+  Info = "info",
 }
 
 interface Props {

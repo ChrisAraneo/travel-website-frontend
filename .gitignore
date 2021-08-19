@@ -4,10 +4,10 @@
 .pnp.js
 
 # scss map files
-src/styles/image-gallery.css
-src/styles/image-gallery.css.map
-src/styles/index.css
-src/styles/index.css.map
+src/image-gallery.css
+src/image-gallery.css.map
+src/index.css
+src/index.css.map
 
 # testing
 /coverage

@@ -83,7 +83,7 @@ $box-shadow-active: 0 0.5em 2em -0em darken($dark, 30%),
   0 0px 0 3px lighten($primary, 10%);
 
 /* IMPORTING BULMA */
-@import "../../node_modules/bulma/bulma.sass";
+@import "../node_modules/bulma/bulma.sass";
 
 /* IMPORTING REACT IMAGE GALLERY */
 @import "./image-gallery.scss";
@@ -271,7 +271,6 @@ form:not(:last-of-type) {
 
 .travel-list-item {
   background-image: $navigation-button-background;
-  // background: linear-gradient(0deg, darken($scheme-main, 25%), lighten($primary, 50%));
   padding: $box-padding/1.5 $box-padding/2;
 
   p {

@@ -5,7 +5,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const TravelFooter = (props) => (
+interface Props {
+  goToPrevTravel?: () => any;
+  goToNextTravel?: () => any;
+}
+
+const TravelFooter: React.FC<Props> = (props: Props) => (
   <nav>
     <ul
       style={{

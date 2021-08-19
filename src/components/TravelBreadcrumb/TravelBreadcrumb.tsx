@@ -5,7 +5,14 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 
-const TravelBreadcrumb = (props) => (
+interface Props {
+  title: string;
+  goToTravelListPage: () => any;
+  goToPrevTravel?: () => any;
+  goToNextTravel?: () => any;
+}
+
+const TravelBreadcrumb: React.FC<Props> = (props: Props) => (
   <div
     style={{
       display: "flex",
@@ -13,14 +20,14 @@ const TravelBreadcrumb = (props) => (
       justifyContent: "space-between",
     }}
   >
-    <nav class="breadcrumb is-medium" aria-label="breadcrumbs">
+    <nav className="breadcrumb is-medium" aria-label="breadcrumbs">
       <ul>
         <li>
           <a href="#" onClick={() => props.goToTravelListPage()}>
             Prelekcje
           </a>
         </li>
-        <li class="is-active">
+        <li className="is-active">
           <a href="#" aria-current="page">
             {props.title}
           </a>

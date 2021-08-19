@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Message, { MessageType } from "../Message/Message";
 import Title from "../Title/Title";
-import "./Form.scss";
+import styles from "./Form.module.scss";
 
 const MESSAGE_OK = "OK";
 const MESSAGE_ERROR = "Błąd";
@@ -46,7 +46,7 @@ const Form: React.FC<Props> = (props: Props) => {
   };
 
   return (
-    <form className="box">
+    <form className={`${styles.background} box`}>
       <Title>{props.title}</Title>
       <Message
         header={messageText}

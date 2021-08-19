@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from "react";
-import { Author } from "../../model/author";
-import { Travel } from "../../model/travel";
+import { Author } from "../../model/Author";
+import { Travel } from "../../model/Travel";
 
 interface Props {
   travel: Travel;

@@ -2,10 +2,10 @@ import React from "react";
 import FormCreateAuthor from "../components/FormCreateAuthor/FormCreateAuthor";
 import FormCreateMeetingPoint from "../components/FormCreateMeetingPoint/FormCreateMeetingPoint";
 import FormCreateTravel from "../components/FormCreateTravel/FormCreateTravel";
-import FormCreateUser from "../components/FormCreateUser";
+import FormCreateUser from "../components/FormCreateUser/FormCreateUser";
 import Title from "../components/Title/Title";
-import { Author } from "../model/author";
-import { MeetingPoint } from "../model/meetingPoint";
+import { Author } from "../model/Author";
+import { MeetingPoint } from "../model/MeetingPoint";
 
 const checkIfHasAdminPermissions = (username?: string) => username === "admin";
 

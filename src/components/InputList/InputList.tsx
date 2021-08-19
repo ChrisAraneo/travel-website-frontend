@@ -8,8 +8,8 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
-import { Valid } from "../../model/valid";
 import { InputResetRef } from "../../types/InputResetRef";
+import { Valid } from "../../types/Valid";
 
 interface Props {
   label: string;

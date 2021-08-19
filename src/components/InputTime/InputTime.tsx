@@ -7,9 +7,8 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
-import { Valid } from "../../model/valid";
 import { InputResetRef } from "../../types/InputResetRef";
-import "../styles/index.css";
+import { Valid } from "../../types/Valid";
 
 export const validateTime = (timeString: any) =>
   typeof timeString === "string" && timeString.length === 5;

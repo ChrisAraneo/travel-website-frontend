@@ -1,6 +1,7 @@
 import { faLock } from "@fortawesome/free-solid-svg-icons";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import config from "../../config/config";
+import { InputResetRef } from "../../types/InputResetRef";
 import Form from "../Form/Form";
 import InputPassword from "../InputPassword/InputPassword";
 
@@ -25,52 +26,65 @@ const FormLoginGuest: React.FC<Props> = (props: Props) => {
 
   const username = GUEST_USERNAME;
 
+  const passwordInputRef = useRef<InputResetRef>(null);
+
   useEffect(() => {
     if (isSubmitted) {
-      if (username && password) {
-        const formData = new FormData();
-        formData.append("username", username);
-        formData.append("password", password);
-
-        fetch(`${config.url}/api/post/login.php`, {
-          method: "POST",
-          body: formData,
-        })
-          .then((httpResponse) => httpResponse.json())
-          .then((response: Response) => {
-            setIsSubmitted(false);
-            setIsSuccess(response.success);
-            setMessage(response.message);
-            setPassword("");
-            props.setUsername(username);
-            if (response.token) {
-              props.setToken(response.token);
-            }
-          })
-          .catch((error) => {
-            setIsSubmitted(false);
-            setIsSuccess(false);
-            setMessage(String(error));
-          });
-      } else {
-        setIsSubmitted(false);
-        setIsSuccess(false);
-        setMessage("Uzupełnij hasło.");
-      }
+      loginGuest(username, password);
     }
   }, [isSubmitted]);
 
-  const onSubmit = () => setIsSubmitted(true);
+  const loginGuest = (username: string, password: string) => {
+    if (!username || !password) {
+      setIsSubmitted(false);
+      setIsSuccess(false);
+      setMessage("Uzupełnij hasło.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("username", username);
+    formData.append("password", password);
+
+    fetch(`${config.url}/api/post/login.php`, {
+      method: "POST",
+      body: formData,
+    })
+      .then((httpResponse) => httpResponse.json())
+      .then((response: Response) => {
+        setIsSubmitted(false);
+        setIsSuccess(response.success);
+        setMessage(response.message);
+        props.setUsername(username);
+        if (response.token) {
+          props.setToken(response.token);
+        } else {
+          setIsSuccess(false);
+          setMessage("Brak tokenu w odpowiedzi serwera.");
+        }
+        resetForm();
+      })
+      .catch((error) => {
+        setIsSubmitted(false);
+        setIsSuccess(false);
+        setMessage(String(error));
+      });
+  };
+
+  const resetForm = () => {
+    passwordInputRef.current?.reset();
+  };
 
   return (
     <Form
       title="Podaj hasło"
       isSuccess={isSuccess}
       message={message}
-      action={onSubmit}
+      action={() => setIsSubmitted(true)}
       buttonText="Wejdź na stronę"
     >
       <InputPassword
+        ref={passwordInputRef}
         label="Hasło"
         icon={faLock}
         errorMessage="Hasło jest za krótkie."

@@ -7,8 +7,8 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
-import { Valid } from "../../model/valid";
 import { InputResetRef } from "../../types/InputResetRef";
+import { Valid } from "../../types/Valid";
 
 export const validateDate = (dateString: any) =>
   typeof dateString === "string" && dateString.length === 10;

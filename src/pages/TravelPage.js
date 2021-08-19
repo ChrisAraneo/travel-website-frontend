@@ -10,25 +10,24 @@ import React from "react";
 import ImageGallery from "react-image-gallery";
 import Button from "../components/Button/Button";
 import Title from "../components/Title/Title";
-import TravelBreadcrumb from "../components/TravelBreadcrumb";
-import TravelFooter from "../components/TravelFooter";
+import TravelBreadcrumb from "../components/TravelBreadcrumb/TravelBreadcrumb";
+import TravelFooter from "../components/TravelFooter/TravelFooter";
 import config from "../config/config";
-import "../styles/index.css";
 
-const images2 = [
-  {
-    original: "https://picsum.photos/id/1018/1000/600/",
-    thumbnail: "https://picsum.photos/id/1018/250/150/",
-  },
-  {
-    original: "https://picsum.photos/id/1015/1000/600/",
-    thumbnail: "https://picsum.photos/id/1015/250/150/",
-  },
-  {
-    original: "",
-    thumbnail: "https://picsum.photos/id/1019/250/150/",
-  },
-];
+// const images2 = [
+//   {
+//     original: "https://picsum.photos/id/1018/1000/600/",
+//     thumbnail: "https://picsum.photos/id/1018/250/150/",
+//   },
+//   {
+//     original: "https://picsum.photos/id/1015/1000/600/",
+//     thumbnail: "https://picsum.photos/id/1015/250/150/",
+//   },
+//   {
+//     original: "",
+//     thumbnail: "https://picsum.photos/id/1019/250/150/",
+//   },
+// ];
 
 class TravelPage extends React.Component {
   constructor(props) {

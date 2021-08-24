@@ -3,15 +3,16 @@ import { MeetingPoint } from "./MeetingPoint";
 import { Photo } from "./Photo";
 
 export interface Travel {
-  authors: Author[];
-  date: Date;
-  description: string;
-  hour: string;
   id_travel: string;
+  title: string;
+  location: string;
+  date: Date;
+  hour: string;
+  id_meetingpoint: string;
   latitude: string;
   longitude: string;
-  location: string;
-  meetingpoint: MeetingPoint;
-  photos: Photo[];
-  title: string;
+  description: string;
+  meetingpoint?: MeetingPoint;
+  authors?: Author[];
+  photos?: Photo[];
 }

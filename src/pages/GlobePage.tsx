@@ -4,7 +4,7 @@ import { Travel } from "../model/Travel";
 
 interface Props {
   travels: Travel[];
-  goToTravelPage: (travelId: number) => any;
+  goToTravelPage: (travelId: string) => any;
 }
 
 interface State {

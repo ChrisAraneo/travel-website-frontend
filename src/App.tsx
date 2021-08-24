@@ -1,60 +1,72 @@
 import React from "react";
+import "./App.scss";
 import Background from "./components/Background/Background";
-import Page from "./components/Page";
+import Page from "./components/Page/Page";
 import config from "./config/config";
+import { Author } from "./model/Author";
+import { AuthorGroup } from "./model/AuthorGroup";
+import { MeetingPoint } from "./model/MeetingPoint";
+import { Photo } from "./model/Photo";
+import { Travel } from "./model/Travel";
+import { UploadedPhoto } from "./model/UploadedPhoto";
 import AdminPanelPage from "./pages/AdminPanelPage";
 import GlobePage from "./pages/GlobePage";
-import LogInGuestPage from "./pages/LogInGuestPage";
-import LogInPage from "./pages/LogInPage";
+import LogInGuestPage from "./pages/LoginGuestPage";
+import LogInPage from "./pages/LoginPage";
 import TravelListPage from "./pages/TravelListPage";
 import TravelPage from "./pages/TravelPage";
-import "./styles/index.css";
 
-class App extends React.Component {
-  constructor(props) {
+interface Props {}
+
+interface State {
+  page: number;
+  token: string;
+  username: string;
+  meetingpoints: MeetingPoint[];
+  authors: Author[];
+  authorgroups: AuthorGroup[];
+  travels: Travel[];
+  photos: Photo[];
+  fulltravels: Travel[];
+  travel?: Travel;
+  travel_prev_id?: string;
+  travel_next_id?: string;
+  travel_photos: UploadedPhoto[];
+  success: boolean;
+  message: string;
+  scriptLoaded: boolean;
+}
+
+const initialState: State = {
+  page: 0,
+  token: "",
+  username: "",
+  meetingpoints: [],
+  authors: [],
+  authorgroups: [],
+  travels: [],
+  photos: [],
+  fulltravels: [],
+  travel: undefined,
+  travel_prev_id: undefined,
+  travel_next_id: undefined,
+  travel_photos: [],
+  success: true,
+  message: "",
+  scriptLoaded: false,
+};
+
+class App extends React.Component<Props, State> {
+  constructor(props: any) {
     super(props);
-    this.renderPage = this.renderPage.bind(this);
-    this.fetchMeetingPoints = this.fetchMeetingPoints.bind(this);
-    this.fetchAuthors = this.fetchAuthors.bind(this);
-    this.fetchAuthorGroups = this.fetchAuthorGroups.bind(this);
-    this.fetchAll = this.fetchAll.bind(this);
-    this.createFullTravelArray = this.createFullTravelArray.bind(this);
-
-    this.goToTravelListPage = this.goToTravelListPage.bind(this);
-    this.goToTravelPage = this.goToTravelPage.bind(this);
-    this.goToPrevTravel = this.goToPrevTravel.bind(this);
-    this.goToNextTravel = this.goToNextTravel.bind(this);
+    this.state = { ...initialState };
   }
 
-  state = {
-    page: 0,
-    token: null,
-    username: null,
-
-    meetingpoints: [],
-    authors: [],
-    authorgroups: [],
-    travels: [],
-    photos: [],
-
-    fulltravels: [],
-
-    travel: null,
-    travel_prev_id: null,
-    travel_next_id: null,
-    travel_photos: [],
-
-    success: true,
-    message: "",
-
-    scriptLoaded: false,
+  componentWillUnmount = () => {
+    // window.location.reload();
   };
 
-  componentWillUnmount() {
-    // window.location.reload();
-  }
-
-  fetchAll(successCallback) {
+  fetchAll = (successCallback: () => any) => {
     this.fetchMeetingPoints(() =>
       this.fetchAuthors(() =>
         this.fetchAuthorGroups(() =>
@@ -81,9 +93,9 @@ class App extends React.Component {
         )
       )
     );
-  }
+  };
 
-  fetchMeetingPoints(successCallback) {
+  fetchMeetingPoints = (successCallback: () => any) => {
     fetch(`${config.url}/api/get/meetingpoints.php?token=${this.state.token}`, {
       method: "GET",
     })
@@ -102,9 +114,9 @@ class App extends React.Component {
           message: String(error),
         })
       );
-  }
+  };
 
-  fetchAuthors(successCallback) {
+  fetchAuthors = (successCallback: () => any) => {
     fetch(`${config.url}/api/get/authors.php?token=${this.state.token}`, {
       method: "GET",
     })
@@ -123,9 +135,9 @@ class App extends React.Component {
           message: String(error),
         })
       );
-  }
+  };
 
-  fetchAuthorGroups(successCallback) {
+  fetchAuthorGroups = (successCallback: () => any) => {
     fetch(`${config.url}/api/get/authorgroups.php?token=${this.state.token}`, {
       method: "GET",
     })
@@ -144,9 +156,9 @@ class App extends React.Component {
           message: String(error),
         })
       );
-  }
+  };
 
-  fetchPhotos(successCallback) {
+  fetchPhotos = (successCallback: () => any) => {
     fetch(`${config.url}/api/get/photos.php?token=${this.state.token}`, {
       method: "GET",
     })
@@ -165,9 +177,9 @@ class App extends React.Component {
           message: String(error),
         })
       );
-  }
+  };
 
-  fetchTravels(successCallback) {
+  fetchTravels = (successCallback: () => any) => {
     fetch(`${config.url}/api/get/travels.php?token=${this.state.token}`, {
       method: "GET",
     })
@@ -186,9 +198,12 @@ class App extends React.Component {
           message: String(error),
         })
       );
-  }
+  };
 
-  fetchPhoto(filename, successCallback) {
+  fetchPhoto = (
+    filename: string,
+    successCallback: (result: { data: string }) => any
+  ) => {
     fetch(
       `${config.url}/api/get/photo.php?token=${this.state.token}&filename=${filename}`,
       {
@@ -207,16 +222,24 @@ class App extends React.Component {
           message: String(error),
         });
       });
-  }
+  };
 
-  createFullTravelArray(travels, authorgroups, authors, meetingpoints, photos) {
+  createFullTravelArray = (
+    travels: any,
+    authorgroups: any,
+    authors: any,
+    meetingpoints: any,
+    photos: any
+  ): Travel[] => {
     const array = [];
 
-    const denormAuthorGroups = [];
+    const denormAuthorGroups: any[] = [];
 
-    authorgroups.forEach((authorgroup) => {
+    authorgroups.forEach((authorgroup: AuthorGroup) => {
       const id_author = authorgroup.id_author;
-      const author = authors.find((item) => item.id_author == id_author);
+      const author = authors.find(
+        (item: AuthorGroup) => item.id_author == id_author
+      );
       denormAuthorGroups.push({
         ...authorgroup,
         ...author,
@@ -242,43 +265,46 @@ class App extends React.Component {
         location,
         date: new Date(date),
         hour,
+        id_meetingpoint,
         meetingpoint: meetingpoints.find(
-          (item) => item.id_meetingpoint == id_meetingpoint
+          (item: MeetingPoint) => item.id_meetingpoint == id_meetingpoint
         ),
         latitude,
         longitude,
         authors: [
           ...denormAuthorGroups.filter((item) => item.id_travel == id_travel),
         ],
-        photos: [...photos.filter((item) => item.id_travel == id_travel)],
+        photos: [
+          ...photos.filter((item: Photo) => item.id_travel == id_travel),
+        ],
         description,
       };
 
       array.push(travel);
     }
 
-    array.sort((A, B) => B.date - A.date);
+    array.sort((A, B) => B.date.getTime() - A.date.getTime());
 
     return array;
-  }
+  };
 
-  goToTravelListPage() {
+  goToTravelListPage = () => {
     this.setState({ page: 4 });
-  }
+  };
 
-  goToTravelPage(id) {
+  goToTravelPage = (id: string) => {
     this.setState(
       {
-        travel: null,
+        travel: undefined,
         travel_photos: [],
-        travel_next_id: null,
-        travel_prev_id: null,
+        travel_next_id: undefined,
+        travel_prev_id: undefined,
       },
       () => {
         const { fulltravels } = this.state;
         if (fulltravels.length > 0) {
-          let prev = null;
-          let next = null;
+          let prev = undefined;
+          let next = undefined;
           const travel = fulltravels.find((item, i, array) => {
             if (item.id_travel === id) {
               if (array[i + 1]) {
@@ -295,10 +321,10 @@ class App extends React.Component {
           if (travel) {
             if (travel.photos) {
               travel.photos.forEach((photo) => {
-                this.fetchPhoto(photo.filename, (photo) => {
-                  const obj = {
-                    original: photo.data,
-                    thumbnail: photo.data,
+                this.fetchPhoto(photo.filename, (result: { data: string }) => {
+                  const obj: UploadedPhoto = {
+                    name: photo.filename,
+                    base64: result.data,
                   };
                   this.setState({
                     travel_photos: [...this.state.travel_photos, obj],
@@ -312,47 +338,49 @@ class App extends React.Component {
             );
           } else {
             this.setState(
-              { travel: null, travel_next_id: null, travel_prev_id: null },
+              {
+                travel: undefined,
+                travel_next_id: undefined,
+                travel_prev_id: undefined,
+              },
               () => this.setState({ page: 5 })
             );
           }
         }
       }
     );
-  }
+  };
 
-  goToPrevTravel() {
+  goToPrevTravel = () => {
     if (
       this.state.travel_prev_id !== null &&
       this.state.travel_prev_id !== undefined
     ) {
       this.goToTravelPage(this.state.travel_prev_id);
     }
-  }
+  };
 
-  goToNextTravel() {
+  goToNextTravel = () => {
     if (
       this.state.travel_next_id !== null &&
       this.state.travel_next_id !== undefined
     ) {
       this.goToTravelPage(this.state.travel_next_id);
     }
-  }
+  };
 
-  renderPage(bundle) {
-    const loginCallback = (username) => {
+  renderPage = () => {
+    const loginCallback = (username: string) => {
       if (username === "admin") {
         if (this.state.fulltravels.length < 1) {
-          this.setState(
-            { page: 4 },
+          this.setState({ page: 4 }, () =>
             this.fetchAll(() => this.setState({ page: 2 }))
           );
         } else {
           this.setState({ page: 2 });
         }
       } else if (username) {
-        this.setState(
-          { page: 4 },
+        this.setState({ page: 4 }, () =>
           this.fetchAll(() => this.setState({ page: 3 }))
         );
       }
@@ -362,7 +390,6 @@ class App extends React.Component {
       case 0:
         return (
           <LogInGuestPage
-            bundle={bundle}
             setToken={(token) =>
               this.setState({ token }, () => loginCallback(this.state.username))
             }
@@ -376,7 +403,6 @@ class App extends React.Component {
       case 1:
         return (
           <LogInPage
-            bundle={bundle}
             setToken={(token) => this.setState({ token })}
             setUsername={(username) =>
               this.setState({ username }, () =>
@@ -386,39 +412,52 @@ class App extends React.Component {
           />
         );
       case 2:
-        return <AdminPanelPage bundle={bundle} />;
+        return (
+          <AdminPanelPage
+            username={this.state.username}
+            token={this.state.token}
+            meetingPoints={this.state.meetingpoints}
+            authors={this.state.authors}
+          />
+        );
       case 3:
         return (
-          <GlobePage bundle={bundle} goToTravelPage={this.goToTravelPage} />
+          <GlobePage
+            travels={this.state.fulltravels}
+            goToTravelPage={this.goToTravelPage}
+          />
         );
       case 4:
         return (
           <TravelListPage
-            bundle={bundle}
+            travels={this.state.fulltravels}
             goToTravelPage={this.goToTravelPage}
           />
         );
       case 5:
         return (
           <TravelPage
-            bundle={bundle}
             travel={this.state.travel}
             photos={this.state.travel_photos}
             goToTravelListPage={this.goToTravelListPage}
             goToPrevTravel={
-              this.state.travel_prev_id !== null ? this.goToPrevTravel : null
+              this.state.travel_prev_id !== null
+                ? this.goToPrevTravel
+                : undefined
             }
             goToNextTravel={
-              this.state.travel_next_id !== null ? this.goToNextTravel : null
+              this.state.travel_next_id !== null
+                ? this.goToNextTravel
+                : undefined
             }
           />
         );
       default:
         return null;
     }
-  }
+  };
 
-  render() {
+  render = () => {
     const bundle = {
       token: this.state.token,
       username: this.state.username,
@@ -434,23 +473,25 @@ class App extends React.Component {
       <>
         <Background />
         <Page
-          bundle={bundle}
+          username={this.state.username}
+          isSuccess={this.state.success}
+          message={this.state.message}
           setPageToLogin={() => this.setState({ page: 1 })}
           setPageToGlobe={
             this.state.page !== 3 && this.state.page >= 2
               ? () => this.setState({ page: 3 })
-              : null
+              : undefined
           }
           setPageToTravelList={
             this.state.page !== 4 && this.state.page >= 2
               ? () => this.setState({ page: 4 })
-              : null
+              : undefined
           }
         >
-          {this.renderPage(bundle)}
+          {this.renderPage()}
         </Page>
       </>
     );
-  }
+  };
 }
 export default App;

@@ -1,6 +1,7 @@
 import React, { SyntheticEvent } from "react";
 import { Author } from "../../model/Author";
 import { Travel } from "../../model/Travel";
+import "./TravelListItem.scss";
 
 interface Props {
   travel: Travel;
@@ -10,7 +11,7 @@ interface Props {
 const TravelListItem: React.FC<Props> = (props) => {
   const { id_travel, title, location, authors } = props.travel;
 
-  const names = authors.map(
+  const names = (authors ?? []).map(
     (author: Author) => `${author.firstname} ${author.lastname}`
   );
 
@@ -24,7 +25,7 @@ const TravelListItem: React.FC<Props> = (props) => {
       <a onClick={onClick}>
         <p>{location}</p>
         <h1 className="title is-spaced">{title}</h1>
-        <h3 className="subtitle">{names.join(", ")}</h3>
+        <h3 className="subtitle">{(names ?? []).join(", ")}</h3>
       </a>
     </div>
   );

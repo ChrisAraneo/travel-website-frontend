@@ -55,13 +55,16 @@ const FormLoginGuest: React.FC<Props> = (props: Props) => {
         setIsSubmitted(false);
         setIsSuccess(response.success);
         setMessage(response.message);
+
         props.setUsername(username);
+
         if (response.token) {
           props.setToken(response.token);
         } else {
           setIsSuccess(false);
           setMessage("Brak tokenu w odpowiedzi serwera.");
         }
+
         resetForm();
       })
       .catch((error) => {

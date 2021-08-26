@@ -6,7 +6,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import config from "../../config/config";
 import { Author } from "../../model/Author";
 import { MeetingPoint } from "../../model/MeetingPoint";
@@ -42,10 +42,44 @@ const FormCreateTravel = (props: Props) => {
   const [selectedAuthors, setSelectedAuthors] = useState<Author[]>([]);
   const [selectedPhotos, setSelectedPhotos] = useState<UploadedPhoto[]>([]);
   const [description, setDescription] = useState<string>("");
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const titleInputRef = useRef<InputResetRef>(null);
-  const locationInputRef = useRef<InputResetRef>(null)()()()(); // TODO RESZTA INPUT REFÓW DO ZROBIENIA;
+  const locationInputRef = useRef<InputResetRef>(null); // TODO RESZTA INPUT REFÓW DO ZROBIENIA;
+  const meetingPointInputRef = useRef<InputResetRef>(null);
+  const dateStringInputRef = useRef<InputResetRef>(null);
+  const timeStringInputRef = useRef<InputResetRef>(null);
+  const selectedAuthorsInputRef = useRef<InputResetRef>(null);
+  const selectedPhotosInputRef = useRef<InputResetRef>(null);
   // const addressStringInputRef = useRef<InputResetRef>(null);
+
+  useEffect(() => {
+    if (isSubmitted) {
+      createTravel(
+        title,
+        locationString,
+        dateString,
+        timeString,
+        meetingPointId,
+        latitude,
+        longitude,
+        description,
+        selectedAuthors,
+        selectedPhotos,
+        props.token
+      )
+        .then(() => setIsSubmitted(false))
+        .catch((error: any) => {
+          if (isSuccess) {
+            setIsSuccess(false);
+            setMessage(JSON.stringify(error));
+          } else {
+            setMessage(`${message}  ${error.message}`);
+          }
+          setIsSubmitted(false);
+        });
+    }
+  }, [isSubmitted]);
 
   const createAuthorGroup = async (
     authors: Author[],
@@ -64,9 +98,14 @@ const FormCreateTravel = (props: Props) => {
       })
         .then((response) => response.json())
         .then(() => null)
-        .catch((error) =>
-          console.error("createAuthorGroup error", error.message)
-        );
+        .catch((error: { message?: string }) => {
+          if (isSuccess) {
+            setIsSuccess(false);
+            setMessage(JSON.stringify(error));
+          } else {
+            setMessage(`${message}  ${error.message}`);
+          }
+        });
     });
   };
 
@@ -87,7 +126,14 @@ const FormCreateTravel = (props: Props) => {
       })
         .then((response) => response.json())
         .then(() => {})
-        .catch((error) => console.error("createPhotos error", error.message));
+        .catch((error) => {
+          if (isSuccess) {
+            setIsSuccess(false);
+            setMessage(JSON.stringify(error));
+          } else {
+            setMessage(`${message}  ${error.message}`);
+          }
+        });
     });
   };
 
@@ -222,6 +268,12 @@ const FormCreateTravel = (props: Props) => {
   const resetForm = () => {
     titleInputRef.current?.reset();
     locationInputRef.current?.reset();
+    meetingPointInputRef.current?.reset();
+    dateStringInputRef.current?.reset();
+    timeStringInputRef.current?.reset();
+    selectedAuthorsInputRef.current?.reset();
+    selectedPhotosInputRef.current?.reset();
+    setDescription("");
   };
 
   return (
@@ -230,21 +282,7 @@ const FormCreateTravel = (props: Props) => {
       isSuccess={isSuccess}
       message={message}
       buttonText="Dodaj stronę prelekcji"
-      action={() =>
-        createTravel(
-          title,
-          locationString,
-          dateString,
-          timeString,
-          meetingPointId,
-          latitude,
-          longitude,
-          description,
-          selectedAuthors,
-          selectedPhotos,
-          props.token
-        )
-      }
+      action={() => setIsSubmitted(true)}
     >
       <InputText
         ref={titleInputRef}
@@ -272,6 +310,7 @@ const FormCreateTravel = (props: Props) => {
       />
 
       <InputSelect
+        ref={meetingPointInputRef}
         label="Wybierz miejsce spotkania"
         items={props.meetingPoints}
         nameProperty="name"
@@ -284,6 +323,7 @@ const FormCreateTravel = (props: Props) => {
       <div className="columns" style={{ marginBottom: 0 }}>
         <div className="column" style={{ paddingBottom: 0 }}>
           <InputDate
+            ref={dateStringInputRef}
             label="Dzień spotkania"
             complete={(text) => setDateString(text ?? "")}
             errorMessage="Wybierz dzień spotkania"
@@ -291,6 +331,7 @@ const FormCreateTravel = (props: Props) => {
         </div>
         <div className="column">
           <InputTime
+            ref={timeStringInputRef}
             label="Godzina spotkania"
             complete={(text) => setTimeString(text ?? "")}
             errorMessage="Wybierz godzinę spotkania."
@@ -299,6 +340,7 @@ const FormCreateTravel = (props: Props) => {
       </div>
 
       <InputList
+        ref={selectedAuthorsInputRef}
         label="Prelegenci"
         data={props.authors}
         value="id_author"
@@ -310,6 +352,7 @@ const FormCreateTravel = (props: Props) => {
       />
 
       <InputPhotos
+        ref={selectedPhotosInputRef}
         label="Zdjęcia"
         buttonText="Dodaj zdjęcie"
         complete={(photos?) => setSelectedPhotos(photos ?? [])}

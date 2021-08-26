@@ -1,6 +1,7 @@
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import config from "../../config/config";
+import { InputResetRef } from "../../types/InputResetRef";
 import Form from "../Form/Form";
 import InputPassword from "../InputPassword/InputPassword";
 import InputText from "../InputText/InputText";
@@ -16,6 +17,16 @@ const FormLogin: React.FC<Props> = (props: Props) => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [token, setToken] = useState<string>("");
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+
+  const usernameInputRef = useRef<InputResetRef>(null);
+  const passwordInputRef = useRef<InputResetRef>(null);
+
+  useEffect(() => {
+    if (isSubmitted) {
+      onLogin(username, password);
+    }
+  }, [isSubmitted]);
 
   const onLogin = (username: string, password: string) => {
     if (!username && !password) {
@@ -34,6 +45,7 @@ const FormLogin: React.FC<Props> = (props: Props) => {
     })
       .then((httpResponse) => httpResponse.json())
       .then((result) => {
+        setIsSubmitted(false);
         setIsSuccess(result.success);
         setMessage(result.message);
         setToken(result.token);
@@ -45,11 +57,19 @@ const FormLogin: React.FC<Props> = (props: Props) => {
         if (typeof username === "string" && username.length > 0) {
           props.setUsername(username);
         }
+
+        resetForm();
       })
       .catch((error) => {
         setIsSuccess(false);
         setMessage(String(error));
+        setIsSubmitted(false);
       });
+  };
+
+  const resetForm = () => {
+    usernameInputRef.current?.reset();
+    passwordInputRef.current?.reset();
   };
 
   return (
@@ -58,9 +78,10 @@ const FormLogin: React.FC<Props> = (props: Props) => {
       isSuccess={isSuccess}
       message={message}
       buttonText="Zaloguj się"
-      action={() => onLogin(username, password)}
+      action={() => setIsSubmitted(true)}
     >
       <InputText
+        ref={usernameInputRef}
         label="Nazwa użytkownika"
         icon={faUser}
         validation={(val) => val.length > 3}
@@ -68,6 +89,7 @@ const FormLogin: React.FC<Props> = (props: Props) => {
         complete={(text) => setUsername(text ?? "")}
       />
       <InputPassword
+        ref={passwordInputRef}
         label="Hasło"
         icon={faLock}
         validation={(val) => val.length > 5}

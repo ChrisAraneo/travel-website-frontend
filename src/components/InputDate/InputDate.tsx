@@ -69,7 +69,7 @@ const InputDate: React.ForwardRefExoticComponent<
             <FontAwesomeIcon icon={faCalendar} />
           </span>
         </div>
-        {valid == Valid.Invalid && (
+        {valid === Valid.Invalid && (
           <p className="help is-danger">{props.errorMessage}</p>
         )}
       </div>

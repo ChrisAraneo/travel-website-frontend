@@ -238,7 +238,7 @@ class App extends React.Component<Props, State> {
     authorgroups.forEach((authorgroup: AuthorGroup) => {
       const id_author = authorgroup.id_author;
       const author = authors.find(
-        (item: AuthorGroup) => item.id_author == id_author
+        (item: AuthorGroup) => item.id_author === id_author
       );
       denormAuthorGroups.push({
         ...authorgroup,
@@ -267,15 +267,15 @@ class App extends React.Component<Props, State> {
         hour,
         id_meetingpoint,
         meetingpoint: meetingpoints.find(
-          (item: MeetingPoint) => item.id_meetingpoint == id_meetingpoint
+          (item: MeetingPoint) => item.id_meetingpoint === id_meetingpoint
         ),
         latitude,
         longitude,
         authors: [
-          ...denormAuthorGroups.filter((item) => item.id_travel == id_travel),
+          ...denormAuthorGroups.filter((item) => item.id_travel === id_travel),
         ],
         photos: [
-          ...photos.filter((item: Photo) => item.id_travel == id_travel),
+          ...photos.filter((item: Photo) => item.id_travel === id_travel),
         ],
         description,
       };

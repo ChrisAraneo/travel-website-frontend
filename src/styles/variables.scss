@@ -1,0 +1,78 @@
+/* SPACING */
+$box-padding: 2rem;
+$block-spacing: 2rem;
+
+/* GENERAL */
+$scheme-main: hsl(45, 57%, 83%);
+$primary: hsl(32, 56%, 28%);
+$info: hsl(204, 71%, 53%);
+$success: hsl(141, 53%, 53%);
+$warning: hsl(48, 100%, 67%);
+$danger: hsl(348, 86%, 61%);
+$light: hsl(40, 50%, 60%);
+$dark: #30200d;
+$background: $scheme-main;
+
+/* BORDERS */
+$border: darken($scheme-main, 20%);
+$border-hover: darken($border, 12%);
+$border-light: lighten($border, 10%);
+$border-light-hover: darken($border-light, 12%);
+
+/* TEXT */
+$text: hsl(0, 0%, 29%);
+$text-light: lighten($text, 0%);
+$text-strong: hsl(0, 0%, 21%);
+$code: hsl(348, 86%, 61%);
+$code-background: hsl(0, 0%, 96%);
+$pre: hsl(0, 0%, 29%);
+$pre-background: hsl(0, 0%, 96%);
+
+/* LINKS */
+$link: $primary;
+$link-visited: hsl(271, 100%, 71%);
+$link-hover: hsl(0, 0%, 21%);
+$link-hover-border: hsl(0, 0%, 71%);
+$link-focus: hsl(0, 0%, 21%);
+$link-focus-border: lighten($primary, 15%);
+$link-active: hsl(0, 0%, 21%);
+$link-active-border: hsl(0, 0%, 29%);
+
+/* INPUT COLORS */
+$input-border-color: darken($border, 20%);
+$input-hover-border-color: darken($input-border-color, 15%);
+$input-focus-border-color: $input-border-color;
+$input-arrow: $input-focus-border-color;
+$input-icon-color: lighten($input-border-color, 7%);
+$input-icon-active-color: $input-hover-border-color;
+
+/* BUTTONS */
+$navigation-button-background: linear-gradient(
+  lighten($primary, 4%),
+  darken($primary, 2%)
+);
+$navigation-button-hover-background: linear-gradient(
+  lighten($primary, 8%),
+  lighten($primary, 3%)
+);
+$navigation-button-active-background: linear-gradient(
+  darken($primary, 8%),
+  lighten($primary, 3%)
+);
+
+/* FILE BUTTON */
+$file-border-color: $primary;
+$file-cta-background-color: $primary;
+$file-cta-color: #fff;
+$file-cta-hover-color: #fff;
+$file-cta-active-color: $file-cta-hover-color;
+$file-name-border-color: #fff;
+
+/* SHADOWS */
+$box-shadow: 0 0.5em 2em -0em darken($dark, 30%),
+  0 0px 0 3px lighten($primary, 5%);
+$box-shadow-active: 0 0.5em 2em -0em darken($dark, 30%),
+  0 0px 0 3px lighten($primary, 10%);
+
+/* BREAKPOINT */
+$breakpoint: 768px;

@@ -4,8 +4,8 @@ import FormCreateMeetingPoint from "../components/FormCreateMeetingPoint/FormCre
 import FormCreateTravel from "../components/FormCreateTravel/FormCreateTravel";
 import FormCreateUser from "../components/FormCreateUser/FormCreateUser";
 import Title from "../components/Title/Title";
-import { Author } from "../model/Author_";
-import { MeetingPoint } from "../model/MeetingPoint_";
+import { Author } from "../model/Author";
+import { MeetingPoint } from "../model/MeetingPoint";
 
 const checkIfHasAdminPermissions = (username?: string) => username === "admin";
 

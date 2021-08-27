@@ -13,8 +13,8 @@ import Title from "../components/Title/Title";
 import TravelBreadcrumb from "../components/TravelBreadcrumb/TravelBreadcrumb";
 import TravelFooter from "../components/TravelFooter/TravelFooter";
 import config from "../config/config";
-import { Travel } from "../model/Travel_";
-import { UploadedPhoto } from "../model/UploadedPhoto_";
+import { Travel } from "../model/Travel";
+import { UploadedPhoto } from "../model/UploadedPhoto";
 
 // TODO
 

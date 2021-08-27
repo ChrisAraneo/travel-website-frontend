@@ -11,21 +11,20 @@ interface Props {
 const TravelListPage: React.FC<Props> = (props: Props) => {
   return (
     <>
-      {props?.travels ? null : (
+      {props?.travels ? (
         <div className="box has-background-dark">
-          {props.travels.map((travel, i) => {
+          {props.travels.map((travel: Travel, i: number) => {
             if (i === 0) {
               return (
-                <>
+                <div key={travel?.id_travel} className="padding-bottom">
                   <TravelListYearSeparator>
                     {travel.date.getFullYear()}
                   </TravelListYearSeparator>
                   <TravelListItem
-                    key={travel.id_travel}
                     travel={travel}
                     goToTravelPage={props.goToTravelPage}
                   />
-                </>
+                </div>
               );
             } else if (i > 0) {
               const lastTravel = props.travels[i - 1];
@@ -33,16 +32,15 @@ const TravelListPage: React.FC<Props> = (props: Props) => {
               const travelYear = travel?.date?.getFullYear();
               if (lastTravelYear > travelYear) {
                 return (
-                  <>
+                  <div key={travel?.id_travel} className="padding-bottom">
                     <TravelListYearSeparator>
                       {travelYear}
                     </TravelListYearSeparator>
                     <TravelListItem
-                      key={travel.id_travel}
                       travel={travel}
                       goToTravelPage={props.goToTravelPage}
                     />
-                  </>
+                  </div>
                 );
               }
             }
@@ -55,7 +53,7 @@ const TravelListPage: React.FC<Props> = (props: Props) => {
             );
           })}
         </div>
-      )}
+      ) : null}
     </>
   );
 };

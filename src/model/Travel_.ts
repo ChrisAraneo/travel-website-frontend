@@ -1,6 +1,6 @@
-import { Author } from "./Author";
-import { MeetingPoint } from "./MeetingPoint";
-import { Photo } from "./Photo";
+import { Author } from "./Author_";
+import { MeetingPoint } from "./MeetingPoint_";
+import { Photo } from "./Photo_";
 
 export interface Travel {
   id_travel: string;

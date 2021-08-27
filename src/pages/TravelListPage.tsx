@@ -1,7 +1,7 @@
 import React from "react";
 import TravelListItem from "../components/TravelListItem/TravelListItem";
 import TravelListYearSeparator from "../components/TravelListYearSeparator/TravelListYearSeparator";
-import { Travel } from "../model/Travel";
+import { Travel } from "../model/Travel_";
 
 interface Props {
   goToTravelPage: (travelId: string) => any;

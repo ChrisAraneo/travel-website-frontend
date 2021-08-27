@@ -7,7 +7,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
-import { UploadedPhoto } from "../../model/UploadedPhoto";
+import { UploadedPhoto } from "../../model/UploadedPhoto_";
 import { InputResetRef } from "../../types/InputResetRef";
 import { Valid } from "../../types/Valid";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Message, { MessageType } from "../components/Message/Message";
-import { Travel } from "../model/Travel";
+import { Travel } from "../model/Travel_";
 
 interface Props {
   travels: Travel[];

@@ -8,9 +8,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useRef, useState } from "react";
 import config from "../../config/config";
-import { Author } from "../../model/Author";
-import { MeetingPoint } from "../../model/MeetingPoint";
-import { UploadedPhoto } from "../../model/UploadedPhoto";
+import { Author } from "../../model/Author_";
+import { MeetingPoint } from "../../model/MeetingPoint_";
+import { UploadedPhoto } from "../../model/UploadedPhoto_";
 import { InputResetRef } from "../../types/InputResetRef";
 import Form from "../Form/Form";
 import InputDate, { validateDate } from "../InputDate/InputDate";

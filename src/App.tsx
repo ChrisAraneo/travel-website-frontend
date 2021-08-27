@@ -67,6 +67,10 @@ class App extends React.Component<Props, State> {
   };
 
   fetchAll = (successCallback: () => any) => {
+    if (this.state.token.length === 0) {
+      return;
+    }
+
     this.fetchMeetingPoints(() =>
       this.fetchAuthors(() =>
         this.fetchAuthorGroups(() =>
@@ -96,7 +100,12 @@ class App extends React.Component<Props, State> {
   };
 
   fetchMeetingPoints = (successCallback: () => any) => {
-    fetch(`${config.url}/api/get/meetingpoints.php?token=${this.state.token}`, {
+    const { token } = this.state;
+    if (token.length === 0) {
+      return;
+    }
+
+    fetch(`${config.url}/api/get/meetingpoints.php?token=${token}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -117,7 +126,12 @@ class App extends React.Component<Props, State> {
   };
 
   fetchAuthors = (successCallback: () => any) => {
-    fetch(`${config.url}/api/get/authors.php?token=${this.state.token}`, {
+    const { token } = this.state;
+    if (token.length === 0) {
+      return;
+    }
+
+    fetch(`${config.url}/api/get/authors.php?token=${token}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -138,7 +152,12 @@ class App extends React.Component<Props, State> {
   };
 
   fetchAuthorGroups = (successCallback: () => any) => {
-    fetch(`${config.url}/api/get/authorgroups.php?token=${this.state.token}`, {
+    const { token } = this.state;
+    if (token.length === 0) {
+      return;
+    }
+
+    fetch(`${config.url}/api/get/authorgroups.php?token=${token}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -159,7 +178,12 @@ class App extends React.Component<Props, State> {
   };
 
   fetchPhotos = (successCallback: () => any) => {
-    fetch(`${config.url}/api/get/photos.php?token=${this.state.token}`, {
+    const { token } = this.state;
+    if (token.length === 0) {
+      return;
+    }
+
+    fetch(`${config.url}/api/get/photos.php?token=${token}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -180,7 +204,12 @@ class App extends React.Component<Props, State> {
   };
 
   fetchTravels = (successCallback: () => any) => {
-    fetch(`${config.url}/api/get/travels.php?token=${this.state.token}`, {
+    const { token } = this.state;
+    if (token.length === 0) {
+      return;
+    }
+
+    fetch(`${config.url}/api/get/travels.php?token=${token}`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -204,8 +233,13 @@ class App extends React.Component<Props, State> {
     filename: string,
     successCallback: (result: { data: string }) => any
   ) => {
+    const { token } = this.state;
+    if (token.length === 0) {
+      return;
+    }
+
     fetch(
-      `${config.url}/api/get/photo.php?token=${this.state.token}&filename=${filename}`,
+      `${config.url}/api/get/photo.php?token=${token}&filename=${filename}`,
       {
         method: "GET",
       }
@@ -284,6 +318,8 @@ class App extends React.Component<Props, State> {
     }
 
     array.sort((A, B) => B.date.getTime() - A.date.getTime());
+
+    console.log("FULLTRAVELS", array);
 
     return array;
   };
@@ -458,16 +494,16 @@ class App extends React.Component<Props, State> {
   };
 
   render = () => {
-    const bundle = {
-      token: this.state.token,
-      username: this.state.username,
-      success: this.state.success,
-      message: this.state.message,
-      authors: this.state.authors,
-      meetingpoints: this.state.meetingpoints,
-      authorgroups: this.state.authorgroups,
-      fulltravels: this.state.fulltravels,
-    };
+    // const bundle = {
+    //   token: this.state.token,
+    //   username: this.state.username,
+    //   success: this.state.success,
+    //   message: this.state.message,
+    //   authors: this.state.authors,
+    //   meetingpoints: this.state.meetingpoints,
+    //   authorgroups: this.state.authorgroups,
+    //   fulltravels: this.state.fulltravels,
+    // };
 
     return (
       <>

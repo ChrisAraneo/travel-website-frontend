@@ -13,9 +13,9 @@ $ig-transparent: rgba(0, 0, 0, 0) !default;
 @import "../../node_modules/react-image-gallery/styles/scss/image-gallery.scss";
 
 @mixin vendor-prefix($name, $value) {
-    @each $vendor in ("-webkit-", "-moz-", "-ms-", "-o-", "") {
-        #{$vendor}#{$name}: #{$value};
-    }
+  @each $vendor in ("-webkit-", "-moz-", "-ms-", "-o-", "") {
+    #{$vendor}#{$name}: #{$value};
+  }
 }
 
 // // SVG ICON STYLES
@@ -178,24 +178,24 @@ $ig-transparent: rgba(0, 0, 0, 0) !default;
 // }
 
 .image-gallery-slide-wrapper {
-    box-sizing: border-box;
-    background-color: $primary;
-    border: 2px solid $primary;
-    border-radius: 0rem;
-    position: relative;
+  box-sizing: border-box;
+  background-color: $primary;
+  border: 2px solid $primary;
+  border-radius: 0rem;
+  position: relative;
 
-    &.left,
-    &.right {
-        display: inline-block;
-        width: calc(100% - 110px); // 100px + 10px for margin
+  &.left,
+  &.right {
+    display: inline-block;
+    width: calc(100% - 110px); // 100px + 10px for margin
 
-        @media (max-width: $ig-small-screen) {
-            width: calc(100% - 87px); // 81px + 6px for margin
-        }
+    @media (max-width: $ig-small-screen) {
+      width: calc(100% - 87px); // 81px + 6px for margin
     }
-    &.image-gallery-rtl {
-        direction: rtl;
-    }
+  }
+  &.image-gallery-rtl {
+    direction: rtl;
+  }
 }
 
 // .image-gallery-slides {

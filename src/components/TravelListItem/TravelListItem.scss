@@ -1,0 +1,42 @@
+@import "../../styles/variables.scss";
+
+.travel-list-item {
+  background-image: $navigation-button-background;
+  padding: $box-padding/1.5 $box-padding/2;
+
+  p {
+    font-size: 1rem;
+    line-height: 1;
+    color: $light;
+  }
+
+  .subtitle,
+  .title,
+  h1,
+  h2,
+  h3,
+  h4,
+  p {
+    text-align: center;
+  }
+  .subtitle {
+    color: $light;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+  }
+  .title {
+    color: white;
+    padding: 0;
+    margin: 0.33em 0;
+    text-decoration: none;
+  }
+}
+
+.travel-list-item:hover {
+  background-image: $navigation-button-hover-background;
+
+  .title {
+    text-decoration: underline;
+  }
+}

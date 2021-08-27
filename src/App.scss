@@ -1,0 +1,267 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* THEME */
+@import "../src/styles/variables.scss";
+
+/* IMPORTING BULMA */
+@import "../node_modules/bulma/bulma.sass";
+
+/* IMPORTING REACT IMAGE GALLERY */
+@import "../src/styles/image-gallery.scss";
+
+/* CUSTOM CSS RULES */
+body {
+  box-sizing: border-box;
+  max-width: 100%;
+  height: 100vh;
+}
+#background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+#root {
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  width: 100%;
+  min-height: 100vh;
+  max-height: 100vh;
+  z-index: 0;
+}
+#root::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($dark, 0.75);
+  z-index: -1;
+}
+#page-wrapper {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 20000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $box-padding;
+}
+#page-container {
+  box-sizing: border-box;
+  background: radial-gradient(
+    circle at top center,
+    $primary,
+    darken($primary, 5%),
+    lighten($dark, 6%),
+    $dark,
+    lighten($dark, 10%)
+  );
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  max-width: 1000px;
+  padding: $box-padding * 2;
+  border-color: black;
+  box-shadow: 0 0.5em 2em -0.125em darken($dark, 15%),
+    0 0px 0 3px lighten($dark, 15%);
+}
+
+/* UTILITY PADDINGS */
+.padding-top {
+  padding-top: $box-padding;
+}
+.padding-right {
+  padding-right: $box-padding;
+}
+.padding-bottom {
+  padding-bottom: $box-padding;
+}
+.padding-left {
+  padding-left: $box-padding;
+}
+.half-padding-top {
+  padding-top: $box-padding / 2;
+}
+.half-padding-right {
+  padding-right: $box-padding / 2;
+}
+.half-padding-bottom {
+  padding-bottom: $box-padding / 2;
+}
+.half-padding-left {
+  padding-left: $box-padding / 2;
+}
+
+/* UTILITY MARGINS */
+.margin-top {
+  padding-top: $box-padding;
+}
+.margin-right {
+  padding-right: $box-padding;
+}
+.margin-bottom {
+  padding-bottom: $box-padding;
+}
+.margin-left {
+  padding-left: $box-padding;
+}
+.half-margin-top {
+  padding-top: $box-padding / 2;
+}
+.half-margin-right {
+  padding-right: $box-padding / 2;
+}
+.half-margin-bottom {
+  padding-bottom: $box-padding / 2;
+}
+.half-margin-left {
+  padding-left: $box-padding / 2;
+}
+
+form:not(:last-of-type) {
+  margin-bottom: $box-padding;
+}
+
+.delete {
+  background-color: #777777;
+}
+.delete:hover {
+  background-color: #aaaaaa;
+}
+
+.page {
+  margin: auto auto;
+}
+
+// .title {
+//   padding-bottom: 1rem;
+// }
+
+#navigation {
+  margin-bottom: $box-padding;
+  .button {
+    box-shadow: $box-shadow;
+    border-width: 0;
+    background-image: $navigation-button-background;
+  }
+  .button:hover {
+    box-shadow: $box-shadow-active;
+    background-image: $navigation-button-hover-background;
+  }
+  .button.is-primary:active,
+  .button.is-primary.is-active {
+    background-color: $button-active-color;
+    color: lighten($primary, 50%);
+    box-shadow: $box-shadow;
+    background-image: $navigation-button-active-background;
+    cursor: not-allowed;
+  }
+}
+
+#globe-container {
+  box-sizing: border-box;
+  display: flex;
+  padding: 0;
+  width: 100%;
+  height: 45rem;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+#globe-iframe {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  width: 100%;
+  height: 45rem;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+// .travel-list-item {
+//   background-image: $navigation-button-background;
+//   padding: $box-padding/1.5 $box-padding/2;
+
+//   p {
+//     font-size: 1rem;
+//     line-height: 1;
+//     color: $light;
+//   }
+
+//   .subtitle,
+//   .title,
+//   h1,
+//   h2,
+//   h3,
+//   h4,
+//   p {
+//     text-align: center;
+//   }
+//   .subtitle {
+//     color: $light;
+//     font-weight: bold;
+//     padding: 0;
+//     margin: 0;
+//   }
+//   .title {
+//     color: white;
+//     padding: 0;
+//     margin: 0.33em 0;
+//     text-decoration: none;
+//   }
+// }
+// .travel-list-item:hover {
+//   background-image: $navigation-button-hover-background;
+
+//   .title {
+//     text-decoration: underline;
+//   }
+// }
+
+/* MOBILE */
+@media only screen and (max-width: $breakpoint) {
+  #page-wrapper {
+    padding: 0;
+  }
+
+  .box,
+  #page-container {
+    padding: $box-padding/2;
+  }
+
+  .box:not(:last-child),
+  .content:not(:last-child),
+  .notification:not(:last-child),
+  .progress:not(:last-child),
+  .table:not(:last-child),
+  .table-container:not(:last-child),
+  .title:not(:last-child),
+  .subtitle:not(:last-child),
+  .block:not(:last-child),
+  .highlight:not(:last-child),
+  .breadcrumb:not(:last-child),
+  .level:not(:last-child),
+  .list:not(:last-child),
+  .message:not(:last-child),
+  .pagination:not(:last-child),
+  .tabs:not(:last-child),
+  #navigation {
+    margin-bottom: $box-padding/2;
+  }
+}

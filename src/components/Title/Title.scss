@@ -1,0 +1,16 @@
+@import "../../styles/variables.scss";
+
+.title {
+  box-sizing: border-box;
+  background-size: auto 1.15rem;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  padding-bottom: 1rem;
+}
+
+/* MOBILE */
+@media only screen and (max-width: $breakpoint) {
+  .title:not(:last-child) {
+    margin-bottom: $box-padding/2;
+  }
+}

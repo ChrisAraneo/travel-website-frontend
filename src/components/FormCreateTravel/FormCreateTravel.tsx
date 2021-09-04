@@ -120,7 +120,7 @@ const FormCreateTravel = (props: Props) => {
       formData.append("id_travel", travelId);
       formData.append("token", token);
 
-      await fetch(`${config.url}/api/post/photo.php`, {
+      await fetch(`${config.url}/api/post/post-photo.php`, {
         method: "POST",
         body: formData,
       })

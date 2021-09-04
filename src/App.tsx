@@ -100,12 +100,7 @@ class App extends React.Component<Props, State> {
   };
 
   fetchMeetingPoints = (successCallback: () => any) => {
-    const { token } = this.state;
-    if (token.length === 0) {
-      return;
-    }
-
-    fetch(`${config.url}/api/get/meetingpoints.php?token=${token}`, {
+    fetch(`${config.url}/api/get/meetingpoints.php`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -126,12 +121,7 @@ class App extends React.Component<Props, State> {
   };
 
   fetchAuthors = (successCallback: () => any) => {
-    const { token } = this.state;
-    if (token.length === 0) {
-      return;
-    }
-
-    fetch(`${config.url}/api/get/authors.php?token=${token}`, {
+    fetch(`${config.url}/api/get/authors.php`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -152,12 +142,7 @@ class App extends React.Component<Props, State> {
   };
 
   fetchAuthorGroups = (successCallback: () => any) => {
-    const { token } = this.state;
-    if (token.length === 0) {
-      return;
-    }
-
-    fetch(`${config.url}/api/get/authorgroups.php?token=${token}`, {
+    fetch(`${config.url}/api/get/authorgroups.php`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -178,12 +163,7 @@ class App extends React.Component<Props, State> {
   };
 
   fetchPhotos = (successCallback: () => any) => {
-    const { token } = this.state;
-    if (token.length === 0) {
-      return;
-    }
-
-    fetch(`${config.url}/api/get/photos.php?token=${token}`, {
+    fetch(`${config.url}/api/get/photos.php`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -204,12 +184,7 @@ class App extends React.Component<Props, State> {
   };
 
   fetchTravels = (successCallback: () => any) => {
-    const { token } = this.state;
-    if (token.length === 0) {
-      return;
-    }
-
-    fetch(`${config.url}/api/get/travels.php?token=${token}`, {
+    fetch(`${config.url}/api/get/travels.php`, {
       method: "GET",
     })
       .then((response) => response.json())
@@ -235,15 +210,21 @@ class App extends React.Component<Props, State> {
   ) => {
     const { token } = this.state;
     if (token.length === 0) {
+      this.setState({
+        success: false,
+        message:
+          "Niepoprawny token użytkownika. Spróbuj zalogować się ponownie.",
+      });
       return;
     }
 
-    fetch(
-      `${config.url}/api/get/photo.php?token=${token}&filename=${filename}`,
-      {
-        method: "GET",
-      }
-    )
+    const formData = new FormData();
+    formData.append("token", token);
+
+    fetch(`${config.url}/api/post/get-photo.php?filename=${filename}`, {
+      method: "POST",
+      body: formData,
+    })
       .then((response) => response.json())
       .then((result) => {
         if (successCallback) {

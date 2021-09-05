@@ -2,6 +2,7 @@ import { faLock } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
 import config from "../../config/config";
 import { InputResetRef } from "../../types/InputResetRef";
+import { LoginResponse } from "../../types/LoginResponse";
 import Form from "../Form/Form";
 import InputPassword from "../InputPassword/InputPassword";
 
@@ -10,12 +11,6 @@ const GUEST_USERNAME = "user";
 interface Props {
   setToken: (token: string) => any;
   setUsername: (username: string) => any;
-}
-
-interface Response {
-  success: boolean;
-  message: string;
-  token: string;
 }
 
 const FormLoginGuest: React.FC<Props> = (props: Props) => {
@@ -51,18 +46,26 @@ const FormLoginGuest: React.FC<Props> = (props: Props) => {
       body: formData,
     })
       .then((httpResponse) => httpResponse.json())
-      .then((response: Response) => {
-        setIsSubmitted(false);
+      .then((response: LoginResponse) => {
         setIsSuccess(response.success);
         setMessage(response.message);
+        setIsSubmitted(false);
 
-        props.setUsername(username);
+        if (!response.success) {
+          return;
+        }
 
-        if (response.token) {
-          props.setToken(response.token);
+        const token = response.token;
+
+        if (typeof token === "string" && token.length > 0) {
+          props.setToken(token);
         } else {
           setIsSuccess(false);
           setMessage("Brak tokenu w odpowiedzi serwera.");
+        }
+
+        if (typeof username === "string" && username.length > 0) {
+          props.setUsername(username);
         }
 
         resetForm();

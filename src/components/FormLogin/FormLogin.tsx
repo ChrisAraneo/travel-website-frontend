@@ -2,6 +2,7 @@ import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import React, { useEffect, useRef, useState } from "react";
 import config from "../../config/config";
 import { InputResetRef } from "../../types/InputResetRef";
+import { LoginResponse } from "../../types/LoginResponse";
 import Form from "../Form/Form";
 import InputPassword from "../InputPassword/InputPassword";
 import InputText from "../InputText/InputText";
@@ -44,17 +45,25 @@ const FormLogin: React.FC<Props> = (props: Props) => {
       body: formData,
     })
       .then((httpResponse) => httpResponse.json())
-      .then((result) => {
+      .then((response: LoginResponse) => {
+        setIsSuccess(response.success);
+        setMessage(response.message);
         setIsSubmitted(false);
-        setIsSuccess(result.success);
-        setMessage(result.message);
-        setToken(result.token);
-        setUsername(result.username);
+
+        if (!response.success) {
+          return;
+        }
 
         if (typeof token === "string" && token.length > 0) {
+          setToken(response.token);
           props.setToken(token);
+        } else {
+          setIsSuccess(false);
+          setMessage("Brak tokenu w odpowiedzi serwera.");
         }
+
         if (typeof username === "string" && username.length > 0) {
+          setUsername(response.username);
           props.setUsername(username);
         }
 

@@ -3,6 +3,7 @@ import "./App.scss";
 import Background from "./components/Background/Background";
 import Page from "./components/Page/Page";
 import config from "./config/config";
+import background from "./images/background.jpg";
 import { Author } from "./model/Author";
 import { AuthorGroup } from "./model/AuthorGroup";
 import { MeetingPoint } from "./model/MeetingPoint";
@@ -488,7 +489,7 @@ class App extends React.Component<Props, State> {
 
     return (
       <>
-        <Background />
+        <Background imageUrl={background} />
         <Page
           username={this.state.username}
           isSuccess={this.state.success}

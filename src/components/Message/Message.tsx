@@ -27,6 +27,7 @@ const Message: React.FC<Props> = (props: Props) => (
               event.preventDefault();
               props.onClick(event);
             }}
+            data-testid="button"
           ></button>
         </div>
         <div className="message-body">{String(props.children)}</div>

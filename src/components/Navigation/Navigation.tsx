@@ -12,10 +12,11 @@ const Navigation: React.FC<Props> = (props: Props) => {
   return (
     <>
       {isNavigationVisible && (
-        <nav id="navigation">
+        <nav id="navigation" data-testid="navigation">
           <ul className="columns">
             <li className="column">
               <a
+                data-testid="globe-button"
                 className={`button is-rounded is-primary is-fullwidth ${
                   props.setPageToGlobe ? "" : "is-active"
                 }`}
@@ -31,6 +32,7 @@ const Navigation: React.FC<Props> = (props: Props) => {
             </li>
             <li className="column">
               <a
+                data-testid="travel-list-button"
                 className={`button is-rounded is-primary is-fullwidth ${
                   props.setPageToTravelList ? "" : "is-active"
                 }`}

@@ -16,6 +16,7 @@ const SiteFooter: React.FC<Props> = (props: Props) => (
     {props.setPageToLogin && (
       <h2>
         <a
+          data-testid="admin-panel-link"
           onClick={(event) => {
             event.preventDefault();
             if (props.setPageToLogin) {

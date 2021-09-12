@@ -23,7 +23,11 @@ const TravelBreadcrumb: React.FC<Props> = (props: Props) => (
     <nav className="breadcrumb is-medium" aria-label="breadcrumbs">
       <ul>
         <li>
-          <a href="#" onClick={() => props.goToTravelListPage()}>
+          <a
+            data-testid="travel-list-page-link"
+            href="#"
+            onClick={props.goToTravelListPage}
+          >
             Prelekcje
           </a>
         </li>
@@ -38,7 +42,11 @@ const TravelBreadcrumb: React.FC<Props> = (props: Props) => (
       <ul style={{ display: "flex", flexDirection: "row" }}>
         {props.goToPrevTravel ? (
           <li className="margin-right">
-            <a href="#" onClick={props.goToPrevTravel}>
+            <a
+              data-testid="prev-travel-link"
+              href="#"
+              onClick={props.goToPrevTravel}
+            >
               <FontAwesomeIcon icon={faChevronLeft} />
             </a>
           </li>
@@ -49,7 +57,11 @@ const TravelBreadcrumb: React.FC<Props> = (props: Props) => (
         )}
         {props.goToNextTravel ? (
           <li>
-            <a href="#" onClick={props.goToNextTravel}>
+            <a
+              data-testid="next-travel-link"
+              href="#"
+              onClick={props.goToNextTravel}
+            >
               <FontAwesomeIcon icon={faChevronRight} />
             </a>
           </li>
